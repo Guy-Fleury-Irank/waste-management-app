@@ -1,0 +1,180 @@
+=== ERREUR MONGODB [2026-06-14T12:39:39.923Z] ===
+Message: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Code: ECONNREFUSED
+Errno: undefined
+Syscall: querySrv
+Hostname: _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Stack: Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)
+
+--- Infos réseau ---
+Hostname: DESKTOP-5UQSEC0
+Platform: win32
+Network interfaces:
+  Wi-Fi: 192.168.248.209
+  Loopback Pseudo-Interface 1: 127.0.0.1
+
+--- URI utilisée (masquée) ---
+URI: mongodb+srv://USER:PASSWORD@cluster0.ztysiik.mongodb.net/?appName=Cluster0
+
+================================
+=== ERREUR MONGODB [2026-06-14T14:03:07.860Z] ===
+Message: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Code: ECONNREFUSED
+Errno: undefined
+Syscall: querySrv
+Hostname: _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Stack: Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)
+
+--- Infos réseau ---
+Hostname: DESKTOP-5UQSEC0
+Platform: win32
+Network interfaces:
+  Wi-Fi: 192.168.248.209
+  Loopback Pseudo-Interface 1: 127.0.0.1
+
+--- URI utilisée (masquée) ---
+URI: mongodb+srv://USER:PASSWORD@cluster0.ztysiik.mongodb.net/?appName=Cluster0
+
+================================
+=== ERREUR MONGODB [2026-06-14T14:07:45.389Z] ===
+Message: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Code: ECONNREFUSED
+Errno: undefined
+Syscall: querySrv
+Hostname: _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Stack: Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)
+
+--- Infos réseau ---
+Hostname: DESKTOP-5UQSEC0
+Platform: win32
+Network interfaces:
+  Wi-Fi: 192.168.248.209
+  Loopback Pseudo-Interface 1: 127.0.0.1
+
+--- URI utilisée (masquée) ---
+URI: mongodb+srv://USER:PASSWORD@cluster0.ztysiik.mongodb.net/?appName=Cluster0
+
+================================
+=== ERREUR MONGODB [2026-06-14T15:30:30.944Z] ===
+Message: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Code: ECONNREFUSED
+Errno: undefined
+Syscall: querySrv
+Hostname: _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Stack: Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)
+
+--- Infos réseau ---
+Hostname: DESKTOP-5UQSEC0
+Platform: win32
+Network interfaces:
+  Wi-Fi: 192.168.248.209
+  Loopback Pseudo-Interface 1: 127.0.0.1
+
+--- URI utilisée (masquée) ---
+URI: mongodb+srv://USER:PASSWORD@cluster0.ztysiik.mongodb.net/?appName=Cluster0
+
+================================
+=== ERREUR MONGODB [2026-06-14T15:40:36.330Z] ===
+Message: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Code: ECONNREFUSED
+Errno: undefined
+Syscall: querySrv
+Hostname: _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Stack: Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)
+
+--- Infos réseau ---
+Hostname: DESKTOP-5UQSEC0
+Platform: win32
+Network interfaces:
+  Wi-Fi: 192.168.248.209
+  Loopback Pseudo-Interface 1: 127.0.0.1
+
+--- URI utilisée (masquée) ---
+URI: mongodb+srv://USER:PASSWORD@cluster0.ztysiik.mongodb.net/?appName=Cluster0
+
+================================
+=== ERREUR MONGODB [2026-06-14T15:43:44.596Z] ===
+Message: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Code: ECONNREFUSED
+Errno: undefined
+Syscall: querySrv
+Hostname: _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Stack: Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)
+
+--- Infos réseau ---
+Hostname: DESKTOP-5UQSEC0
+Platform: win32
+Network interfaces:
+  Wi-Fi: 192.168.248.209
+  Loopback Pseudo-Interface 1: 127.0.0.1
+
+--- URI utilisée (masquée) ---
+URI: mongodb+srv://USER:PASSWORD@cluster0.ztysiik.mongodb.net/?appName=Cluster0
+
+================================
+=== ERREUR MONGODB [2026-06-14T15:51:18.690Z] ===
+Message: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Code: ECONNREFUSED
+Errno: undefined
+Syscall: querySrv
+Hostname: _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Stack: Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)
+
+--- Infos réseau ---
+Hostname: DESKTOP-5UQSEC0
+Platform: win32
+Network interfaces:
+  Wi-Fi: 192.168.248.209
+  Loopback Pseudo-Interface 1: 127.0.0.1
+
+--- URI utilisée (masquée) ---
+URI: mongodb+srv://USER:PASSWORD@cluster0.ztysiik.mongodb.net/?appName=Cluster0
+
+================================
+=== ERREUR MONGODB [2026-06-14T16:13:21.590Z] ===
+Message: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Code: ECONNREFUSED
+Errno: undefined
+Syscall: querySrv
+Hostname: _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Stack: Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)
+
+--- Infos réseau ---
+Hostname: DESKTOP-5UQSEC0
+Platform: win32
+Network interfaces:
+  Wi-Fi: 192.168.248.209
+  Loopback Pseudo-Interface 1: 127.0.0.1
+
+--- URI utilisée (masquée) ---
+URI: mongodb+srv://USER:PASSWORD@cluster0.ztysiik.mongodb.net/?appName=Cluster0
+
+================================
+=== ERREUR MONGODB [2026-06-14T16:18:31.733Z] ===
+Message: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Code: ECONNREFUSED
+Errno: undefined
+Syscall: querySrv
+Hostname: _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Stack: Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)
+
+--- Infos réseau ---
+Hostname: DESKTOP-5UQSEC0
+Platform: win32
+Network interfaces:
+  Wi-Fi: 192.168.248.209
+  Loopback Pseudo-Interface 1: 127.0.0.1
+
+--- URI utilisée (masquée) ---
+URI: mongodb+srv://USER:PASSWORD@cluster0.ztysiik.mongodb.net/?appName=Cluster0
+
+================================

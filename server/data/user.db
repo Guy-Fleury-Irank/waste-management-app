@@ -1,0 +1,7 @@
+{"name":"Jean Client","email":"client@test.com","password":"$2b$10$oa5.syAVlaI7gvvrLvZBTuQza96n4FWfotr563m3sGiBuPKBDq6Qm","role":"client","_id":"6wDe2ZDLcIvzWV2r"}
+{"name":"Don de Dieu DUSHIME","email":"dushdoddy@gmail.com","password":"$2b$10$l2//pvFOnieBa2dUo03yQeqN8iebjpLucAI2hfyaPtztRs3JQviZC","role":"client","phone":"+25761008869","address":"KINYINYA","_id":"FjQpbxqgeAGYO8JK"}
+{"name":"Administrateur","email":"admin@wastemanager.com","password":"$2b$10$2u4a9gUye0wST/hSaTgyH./QuiLa3t.pDX6lFxPaFPR6.O1FNiAvS","role":"admin","phone":"+243000000000","address":"Siège social","_id":"RAWRWcC8UZEVlTzi"}
+{"name":"Jean Dupont","email":"exemple@email.com","password":"$2b$10$fIRn88HGTRQvgVIdvQ/7Oe5mdu2lgJ.QOFRHn.aTMGMPKJrpd2zh6","role":"client","phone":"123456789","address":"Kigobe","_id":"bcw6NLGkRofw2KGj"}
+{"name":"Jean Dupont","email":"jean@test.com","password":"$2b$10$VI4bWw8Upr9x3F4WN/eBuuw/ErTnGPux0Z7CRFZLsczPbehLQj89m","role":"client","phone":"+1234567890","address":"123 Main St","_id":"fAZafnwcDZmAsRoo"}
+{"name":"Guy fleury Irankunda","email":"guyfleuryirankunda2004@gmail.com","password":"$2b$10$AGRSPvjh.XFOeQXS2SSQQuLJCzSQYmEZynVfLgMz5uO4adbJQmCmi","role":"staff","phone":"+25761008869","address":"KINYINYA","_id":"gs0lAD2ZHRBX9YTI"}
+{"name":"Test User","email":"test@example.com","password":"$2b$10$819HAYn6yGqsuJfELxHpBui1ZiQU958FIGUBqL.n5kO0.8sOikEeK","role":"client","phone":"+1234567890","address":"123 Test Street","_id":"z333gSmC2LM3KFLR"}

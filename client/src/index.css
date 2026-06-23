@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+@theme {
+  /* Couleurs xAI */
+  --color-xai-black: #111111;
+  --color-xai-gray-50: #f7f7f7;
+  --color-xai-gray-100: #e5e5e5;
+  --color-xai-gray-200: #d4d4d4;
+  --color-xai-gray-300: #a3a3a3;
+  --color-xai-gray-400: #737373;
+  --color-xai-gray-500: #525252;
+  --color-xai-gray-900: #1a1a1a;
+  
+  /* Radius personnalisés */
+  --radius-card: 24px;
+  --radius-pill: 9999px;
+}
+
+/* Styles globaux xAI */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #ffffff;
+    color: #111111;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+/* Animation fade-up pour l'apparition */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.6s ease-out forwards;
+}
+
+.animate-fade-up-delay-1 {
+  animation: fadeUp 0.6s ease-out 0.1s forwards;
+  opacity: 0;
+}
+
+.animate-fade-up-delay-2 {
+  animation: fadeUp 0.6s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+.animate-fade-up-delay-3 {
+  animation: fadeUp 0.6s ease-out 0.3s forwards;
+  opacity: 0;
+}
+
+/* Effet masque gradient (fade out en bas) */
+.mask-fade-bottom {
+  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  transition: mask-image 0.4s ease, -webkit-mask-image 0.4s ease;
+}
+
+.mask-fade-bottom:hover {
+  mask-image: linear-gradient(to bottom, black 100%, black 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 100%, black 100%);
+}
+
+/* Inputs style xAI (souligné minimaliste) */
+.input-xai {
+  width: 100%;
+  padding: 0.75rem 0;
+  font-size: 1rem;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #d4d4d4;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.input-xai:focus {
+  border-bottom-color: #111111;
+}
+
+.input-xai::placeholder {
+  color: #a3a3a3;
+  font-weight: 300;
+}
+
+/* Label xAI */
+.label-xai {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #525252;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.25rem;
+}
+
+/* Scrollbar fine */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #d4d4d4;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a3a3a3;
+}

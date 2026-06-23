@@ -1,0 +1,20 @@
+=== ERREUR MONGODB [2026-06-16T07:04:26.957Z] ===
+Message: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Code: ECONNREFUSED
+Errno: undefined
+Syscall: querySrv
+Hostname: _mongodb._tcp.cluster0.ztysiik.mongodb.net
+Stack: Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.ztysiik.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:294:17)
+
+--- Infos réseau ---
+Hostname: DESKTOP-5UQSEC0
+Platform: win32
+Network interfaces:
+  Ethernet: 192.168.88.122
+  Loopback Pseudo-Interface 1: 127.0.0.1
+
+--- URI utilisée (masquée) ---
+URI: mongodb+srv://USER:PASSWORD@cluster0.ztysiik.mongodb.net/?appName=Cluster0
+
+================================
