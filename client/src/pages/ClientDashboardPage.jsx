@@ -44,17 +44,17 @@ export default function ClientDashboardPage() {
     <div className="space-y-8">
       {/* Welcome */}
       <div>
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">
           Bonjour, {user?.name}
         </h1>
-        <p className="mt-1 text-sm text-gray-400 font-light">
+        <p className="mt-1 text-sm text-muted font-light">
           Votre espace client — Suivez vos abonnements et collectes
         </p>
       </div>
 
       {/* Active Subscription Card */}
       {activeSub ? (
-        <div className="bg-gray-50 rounded-2xl p-6">
+        <div className="bg-surface border border-border rounded-sm p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Abonnement actif</p>
@@ -67,28 +67,28 @@ export default function ClientDashboardPage() {
                 {activeSub.isOrganization && ' · Organisation'}
               </p>
             </div>
-            <span className="px-4 py-2 text-sm font-medium rounded-full bg-gray-900 text-white">
+            <span className="px-4 py-2 text-sm font-medium rounded-sm bg-foreground text-white font-mono">
               {activeSub.status}
             </span>
           </div>
           <div className="mt-4 flex gap-3">
-            <span className="px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-500">
+            <span className="px-3 py-1 text-xs font-medium rounded-sm bg-surface text-muted">
               Paiement: {activeSub.paymentMethod}
             </span>
-            <span className={`px-3 py-1 text-xs font-medium rounded-full ${
+            <span className={`px-3 py-1 text-xs font-medium rounded-sm ${
               activeSub.paymentStatus === 'paye' ? 'bg-green-50 text-green-600' :
               activeSub.paymentStatus === 'en_attente' ? 'bg-yellow-50 text-yellow-600' :
               'bg-red-50 text-red-500'
-            }`}>
+            } font-mono`}>
               {activeSub.paymentStatus}
             </span>
           </div>
         </div>
       ) : (
-        <div className="bg-gray-50 rounded-2xl p-6 text-center">
-          <p className="text-gray-400">Vous n'avez pas d'abonnement actif.</p>
+        <div className="bg-surface border border-border rounded-sm p-6 text-center">
+          <p className="text-muted">Vous n'avez pas d'abonnement actif.</p>
           <button onClick={() => navigate('/abonnements')}
-            className="mt-3 px-5 py-2 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-all">
+            className="mt-3 px-5 py-2 border border-border bg-surface text-foreground text-sm font-medium rounded-sm hover:border-strong transition-all">
             Souscrire maintenant
           </button>
         </div>
@@ -96,20 +96,20 @@ export default function ClientDashboardPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-gray-50 rounded-2xl p-6">
-          <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Abonnements</p>
-          <p className="mt-2 text-2xl font-bold tracking-tight text-gray-900">{subscriptions.length}</p>
-          <p className="mt-1 text-xs text-gray-400">total</p>
+        <div className="bg-surface border border-border rounded-sm p-6">
+          <p className="text-xs font-medium text-muted uppercase tracking-wider">Abonnements</p>
+          <p className="mt-2 text-2xl font-bold tracking-tight text-foreground font-mono">{subscriptions.length}</p>
+          <p className="mt-1 text-xs text-muted">total</p>
         </div>
-        <div className="bg-gray-50 rounded-2xl p-6">
-          <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Collectes</p>
-          <p className="mt-2 text-2xl font-bold tracking-tight text-gray-900">{collectesTerminees}</p>
-          <p className="mt-1 text-xs text-gray-400">terminées</p>
+        <div className="bg-surface border border-border rounded-sm p-6">
+          <p className="text-xs font-medium text-muted uppercase tracking-wider">Collectes</p>
+          <p className="mt-2 text-2xl font-bold tracking-tight text-foreground font-mono">{collectesTerminees}</p>
+          <p className="mt-1 text-xs text-muted">terminées</p>
         </div>
-        <div className="bg-gray-50 rounded-2xl p-6">
-          <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Volume</p>
-          <p className="mt-2 text-2xl font-bold tracking-tight text-gray-900">{totalCollected} kg</p>
-          <p className="mt-1 text-xs text-gray-400">collectés</p>
+        <div className="bg-surface border border-border rounded-sm p-6">
+          <p className="text-xs font-medium text-muted uppercase tracking-wider">Volume</p>
+          <p className="mt-2 text-2xl font-bold tracking-tight text-foreground font-mono">{totalCollected} kg</p>
+          <p className="mt-1 text-xs text-muted">collectés</p>
         </div>
       </div>
 

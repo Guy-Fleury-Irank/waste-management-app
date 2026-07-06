@@ -68,7 +68,7 @@ export default function VehiculesPage() {
   };
 
   const statusColors = {
-    actif: 'bg-gray-100 text-gray-600',
+    actif: 'bg-surface text-muted',
     maintenance: 'bg-blue-50 text-blue-600',
     hors_service: 'bg-red-50 text-red-500'
   };
@@ -76,9 +76,9 @@ export default function VehiculesPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">Véhicules</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">Véhicules</h1>
         {isStaffOrAdmin && (
-          <button onClick={openCreate} className="px-5 py-2.5 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-colors">
+          <button onClick={openCreate} className="px-4 py-2 border border-border bg-surface text-foreground text-sm font-medium rounded-sm hover:border-strong transition-colors">
             + Nouveau véhicule
           </button>
         )}
@@ -86,14 +86,14 @@ export default function VehiculesPage() {
 
       {showForm && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50" onClick={() => setShowForm(false)}>
-          <div className="bg-white rounded-2xl p-6 w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto shadow-xl" onClick={(e) => e.stopPropagation()}>
-            <h2 className="text-lg font-bold text-gray-900 mb-5">{editing ? 'Modifier' : 'Nouveau'} véhicule</h2>
+          <div className="bg-surface border border-border rounded-sm p-6 w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <h2 className="text-lg font-bold text-foreground mb-5">{editing ? 'Modifier' : 'Nouveau'} véhicule</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <input name="plate" placeholder="Plaque" required value={form.plate} onChange={handleChange}
-                  className="w-full px-0 py-2.5 bg-transparent border-0 border-b border-gray-200 text-sm focus:border-black focus:ring-0 outline-none placeholder:text-gray-300" />
+                  className="w-full px-0 py-2.5 bg-transparent border-0 border-b border-border text-sm focus:border-strong focus:ring-0 outline-none placeholder:text-muted" />
                 <input name="year" type="number" placeholder="Année" value={form.year} onChange={handleChange}
-                  className="w-full px-0 py-2.5 bg-transparent border-0 border-b border-gray-200 text-sm focus:border-black focus:ring-0 outline-none placeholder:text-gray-300" />
+                  className="w-full px-0 py-2.5 bg-transparent border-0 border-b border-border text-sm focus:border-strong focus:ring-0 outline-none placeholder:text-muted" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <input name="brand" placeholder="Marque" required value={form.brand} onChange={handleChange}
@@ -133,56 +133,56 @@ export default function VehiculesPage() {
                 <div>
                   <label className="label-xai">Dernière maintenance</label>
                   <input type="date" name="lastMaintenance" value={form.lastMaintenance} onChange={handleChange}
-                    className="w-full px-0 py-2.5 bg-transparent border-0 border-b border-gray-200 text-sm focus:border-black focus:ring-0 outline-none" />
+                    className="w-full px-0 py-2.5 bg-transparent border-0 border-b border-border text-sm focus:border-strong focus:ring-0 outline-none" />
                 </div>
                 <div>
                   <label className="label-xai">Prochaine maintenance</label>
                   <input type="date" name="nextMaintenance" value={form.nextMaintenance} onChange={handleChange}
-                    className="w-full px-0 py-2.5 bg-transparent border-0 border-b border-gray-200 text-sm focus:border-black focus:ring-0 outline-none" />
+                    className="w-full px-0 py-2.5 bg-transparent border-0 border-b border-border text-sm focus:border-strong focus:ring-0 outline-none" />
                 </div>
               </div>
               <div className="flex gap-3 pt-3">
-                <button type="submit" className="flex-1 py-2.5 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-colors">
+                <button type="submit" className="flex-1 py-2.5 bg-foreground text-white text-sm font-medium rounded-sm hover:bg-strong transition-colors">
                   {editing ? 'Modifier' : 'Créer'}
                 </button>
                 <button type="button" onClick={() => setShowForm(false)}
-                  className="flex-1 py-2.5 border border-gray-200 text-gray-500 text-sm font-medium rounded-full hover:border-gray-400 transition-colors">Annuler</button>
+                  className="flex-1 py-2.5 border border-border text-muted text-sm font-medium rounded-sm hover:border-strong transition-colors">Annuler</button>
               </div>
             </form>
           </div>
         </div>
       )}
 
-      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+      <div className="bg-surface border border-border rounded-sm overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-gray-100">
-              <th className="text-left px-5 py-3.5 text-xs font-medium text-gray-400 uppercase tracking-wider">Plaque</th>
-              <th className="text-left px-5 py-3.5 text-xs font-medium text-gray-400 uppercase tracking-wider">Marque / Modèle</th>
-              <th className="text-left px-5 py-3.5 text-xs font-medium text-gray-400 uppercase tracking-wider">Type</th>
-              <th className="text-left px-5 py-3.5 text-xs font-medium text-gray-400 uppercase tracking-wider">Capacité</th>
-              <th className="text-left px-5 py-3.5 text-xs font-medium text-gray-400 uppercase tracking-wider">Statut</th>
-              <th className="text-right px-5 py-3.5 text-xs font-medium text-gray-400 uppercase tracking-wider">Actions</th>
+            <tr className="border-b border-border bg-surface">
+              <th className="text-left px-5 py-3.5 text-xs font-medium text-muted uppercase tracking-wider">Plaque</th>
+              <th className="text-left px-5 py-3.5 text-xs font-medium text-muted uppercase tracking-wider">Marque / Modèle</th>
+              <th className="text-left px-5 py-3.5 text-xs font-medium text-muted uppercase tracking-wider">Type</th>
+              <th className="text-left px-5 py-3.5 text-xs font-medium text-muted uppercase tracking-wider">Capacité</th>
+              <th className="text-left px-5 py-3.5 text-xs font-medium text-muted uppercase tracking-wider">Statut</th>
+              <th className="text-right px-5 py-3.5 text-xs font-medium text-muted uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50">
+          <tbody className="divide-y divide-border">
             {vehicles.map((v) => (
-              <tr key={v._id} className="hover:bg-gray-50 transition-colors">
-                <td className="px-5 py-4 text-sm font-medium text-gray-900">{v.plate}</td>
-                <td className="px-5 py-4 text-sm text-gray-500">{v.brand} {v.model}</td>
+              <tr key={v._id} className="hover:bg-surface transition-colors">
+                <td className="px-5 py-4 text-sm font-medium text-foreground">{v.plate}</td>
+                <td className="px-5 py-4 text-sm text-muted">{v.brand} {v.model}</td>
                 <td className="px-5 py-4">
-                  <span className="px-3 py-1 text-xs rounded-full bg-gray-100 text-gray-500">{v.type}</span>
+                  <span className="px-3 py-1 text-xs rounded-sm bg-surface text-muted">{v.type}</span>
                 </td>
-                <td className="px-5 py-4 text-sm text-gray-500">{v.capacity}</td>
+                <td className="px-5 py-4 text-sm font-mono text-foreground">{v.capacity}</td>
                 <td className="px-5 py-4">
-                  <span className={`px-3 py-1 text-xs rounded-full font-medium ${statusColors[v.status]}`}>{v.status}</span>
+                  <span className={`px-3 py-1 text-xs rounded-sm font-medium ${statusColors[v.status]}`}>{v.status}</span>
                 </td>
                 <td className="px-5 py-4 text-right">
                   {isStaffOrAdmin && (
                     <>
-                      <button onClick={() => openEdit(v)} className="text-sm text-gray-400 hover:text-gray-900 transition-colors mr-4">Modifier</button>
+                      <button onClick={() => openEdit(v)} className="text-sm text-muted hover:text-strong transition-colors mr-4">Modifier</button>
                       {user?.role === 'admin' && (
-                        <button onClick={() => handleDelete(v._id)} className="text-sm text-gray-300 hover:text-red-500 transition-colors">Supprimer</button>
+                        <button onClick={() => handleDelete(v._id)} className="text-sm text-red-500 hover:text-red-600 transition-colors">Supprimer</button>
                       )}
                     </>
                   )}
@@ -190,7 +190,7 @@ export default function VehiculesPage() {
               </tr>
             ))}
             {vehicles.length === 0 && (
-              <tr><td colSpan={6} className="text-center py-12 text-sm text-gray-300 font-light">Aucun véhicule enregistré</td></tr>
+              <tr><td colSpan={6} className="text-center py-12 text-sm text-muted font-light">Aucun véhicule enregistré</td></tr>
             )}
           </tbody>
         </table>

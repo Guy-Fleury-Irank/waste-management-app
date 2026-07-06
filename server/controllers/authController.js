@@ -102,13 +102,15 @@ exports.getMe = async (req, res) => {
 // @route   POST /api/auth/logout
 exports.logout = async (req, res) => {
   try {
-    // Clear the token cookie
+    // Clear the token cookie — force immediate expiration
     res.clearCookie('token', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax'
+      sameSite: 'lax',
+      maxAge: 0 // Force expiration immédiate
     });
-    res.json({ message: 'Logged out successfully' });
+    console.log(`🔑 Token cleared for user: ${req.user?.email || 'unknown'}`);
+    res.json({ message: 'Déconnexion réussie' });
   } catch (error) {
     res.status(500).json({ message: 'Erreur serveur', error: error.message });
   }

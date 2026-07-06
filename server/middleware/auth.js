@@ -28,9 +28,20 @@ exports.protect = async (req, res, next) => {
       return res.status(401).json({ message: 'Utilisateur introuvable' });
     }
     
-    // Retirer le password de la réponse
-    const { password, ...userWithoutPassword } = user;
-    req.user = userWithoutPassword;
+    // Retirer le password de la réponse — pattern sûr pour Mongoose ET NeDB proxies
+    const userObject = user.toJSON ? user.toJSON() : (user._doc || user);
+    const { password, ...userWithoutPassword } = userObject;
+    
+    // Construire explicitement req.user avec tous les champs (évite undefined avec NeDB)
+    req.user = {
+      _id: userWithoutPassword._id,
+      name: userWithoutPassword.name,
+      email: userWithoutPassword.email,
+      role: userWithoutPassword.role,
+      phone: userWithoutPassword.phone,
+      address: userWithoutPassword.address,
+      isActive: userWithoutPassword.isActive
+    };
 
     if (req.user.isActive === false) {
       return res.status(401).json({ message: 'Utilisateur désactivé ou introuvable' });

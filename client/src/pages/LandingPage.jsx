@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { ArrowRight, ChevronRight } from 'lucide-react';
 
 export default function LandingPage() {
   const { user } = useAuth();
@@ -43,27 +44,27 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background text-foreground">
       {/* ============ HEADER ============ */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-surface/95 backdrop-blur-sm border-b border-border">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link to="/" className="text-xl font-bold tracking-tight text-gray-900">
+          <Link to="/" className="text-xl font-semibold tracking-[0.03em] text-foreground">
             Waste<span className="font-light">Manager</span>
           </Link>
           <nav className="flex items-center gap-4">
             {user ? (
               <Link
                 to={user.role === 'client' ? '/client-dashboard' : user.role === 'staff' ? '/staff-dashboard' : '/dashboard'}
-                className="px-5 py-2 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-colors"
+                className="px-4 py-2 border border-border bg-surface text-sm font-medium tracking-[0.01em] text-foreground hover:border-strong transition-colors"
               >
                 Tableau de bord
               </Link>
             ) : (
               <>
-                <Link to="/login" className="px-5 py-2 text-sm font-medium text-gray-500 hover:text-black transition-colors">
+                <Link to="/login" className="px-4 py-2 text-sm font-medium text-muted hover:text-strong transition-colors">
                   Connexion
                 </Link>
-                <Link to="/register" className="px-5 py-2 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-colors">
+                <Link to="/register" className="px-4 py-2 border border-border bg-surface text-sm font-medium tracking-[0.01em] text-foreground hover:border-strong transition-colors">
                   S'inscrire
                 </Link>
               </>
@@ -75,23 +76,23 @@ export default function LandingPage() {
       {/* ============ HERO ============ */}
       <section className="pt-32 pb-24 px-6">
         <div className="max-w-7xl mx-auto text-center">
+          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-muted">Brutalisme Technique</span>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-gray-900 leading-[1.05] max-w-4xl mx-auto">
             La gestion des déchets<br />
-            <span className="text-gray-300">réinventée.</span>
+            <span className="text-muted">réinventée.</span>
           </h1>
           <p className="mt-6 text-lg md:text-xl text-gray-400 font-light max-w-2xl mx-auto leading-relaxed">
             Une plateforme tout-en-un pour piloter vos collectes, suivre vos sites,
             gérer votre flotte et optimiser votre impact environnemental.
           </p>
-          <div className="mt-10 flex items-center justify-center gap-4">
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/register" className="px-8 py-3.5 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-colors inline-flex items-center gap-2">
               Commencer maintenant
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+              <ArrowRight className="w-4 h-4 stroke-[1.5]" />
             </Link>
-            <Link to="/login" className="px-8 py-3.5 border border-gray-200 text-gray-500 text-sm font-medium rounded-full hover:border-gray-400 hover:text-gray-700 transition-colors">
+            <Link to="/login" className="px-8 py-3.5 border border-border text-muted text-sm font-medium rounded-full hover:border-strong hover:text-strong transition-colors inline-flex items-center gap-2">
               Voir la démo
+              <span className="font-mono text-muted">[done]</span>
             </Link>
           </div>
         </div>
@@ -99,24 +100,22 @@ export default function LandingPage() {
 
       {/* ============ Z-PATTERN SECTIONS ============ */}
       {sections.map((section, idx) => (
-        <section key={section.id} className={`py-20 md:py-28 px-6 ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
+        <section key={section.id} className={`py-20 md:py-28 px-6 ${idx % 2 === 0 ? 'bg-background' : 'bg-surface'}`}>
           <div className="max-w-7xl mx-auto">
             <div className={`flex flex-col ${section.imageLeft ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12 md:gap-20`}>
               <div className="flex-1 max-w-lg">
-                <span className="text-xs font-medium text-gray-300 uppercase tracking-[0.2em]">{section.id}</span>
-                <h2 className="mt-4 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight leading-tight">{section.title}</h2>
-                <p className="mt-5 text-base text-gray-400 font-light leading-relaxed">{section.desc}</p>
-                <Link to="/register" className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-gray-900 border-b border-gray-200 pb-0.5 hover:border-gray-900 transition-colors">
+                <span className="text-xs font-semibold uppercase tracking-[0.3em] text-muted">{section.id}</span>
+                <h2 className="mt-4 text-3xl md:text-4xl font-semibold text-foreground tracking-tight leading-tight">{section.title}</h2>
+                <p className="mt-5 text-base text-muted-strong font-light leading-relaxed">{section.desc}</p>
+                <Link to="/register" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-foreground border-b border-border pb-0.5 hover:border-strong transition-colors">
                   En savoir plus
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
+                  <ChevronRight className="w-3.5 h-3.5 stroke-[1.5]" />
                 </Link>
               </div>
               <div className="flex-1 w-full">
-                <div className="relative group rounded-3xl overflow-hidden bg-gray-100">
+                <div className="relative overflow-hidden bg-surface border border-border">
                   <img src={section.image} alt={section.title} className="w-full h-72 md:h-96 object-cover mask-fade-bottom transition-transform duration-500 group-hover:scale-105" loading={idx < 2 ? 'eager' : 'lazy'} />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/5 to-transparent pointer-events-none" />
                 </div>
               </div>
             </div>
@@ -125,12 +124,12 @@ export default function LandingPage() {
       ))}
 
       {/* ============ PLANS D'ABONNEMENT ============ */}
-      <section className="py-20 md:py-28 px-6 bg-gray-50">
+      <section className="py-20 md:py-28 px-6 bg-background">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <span className="text-xs font-medium text-gray-300 uppercase tracking-[0.2em]">Tarifs</span>
-            <h2 className="mt-4 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Choisissez votre plan</h2>
-            <p className="mt-4 text-base text-gray-400 font-light max-w-xl mx-auto">
+            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-muted">Tarifs</span>
+            <h2 className="mt-4 text-3xl md:text-4xl font-semibold text-foreground tracking-tight">Choisissez votre plan</h2>
+            <p className="mt-4 text-base text-muted-strong font-light max-w-xl mx-auto">
               Des offres adaptées à vos besoins. Particulier ou organisation, nous avons le plan qu'il vous faut.
             </p>
           </div>
@@ -140,8 +139,8 @@ export default function LandingPage() {
               <p className="mt-4 text-4xl font-bold tracking-tight text-gray-900">25 <span className="text-base font-normal text-gray-400">USD/sem</span></p>
               <p className="mt-2 text-sm text-gray-400 font-light">Idéal pour les petits besoins ponctuels</p>
               <ul className="mt-6 space-y-3">
-                <li className="flex items-center gap-2 text-sm text-gray-500"><span className="w-1.5 h-1.5 rounded-full bg-gray-900"></span>Collecte hebdomadaire</li>
-                <li className="flex items-center gap-2 text-sm text-gray-500"><span className="w-1.5 h-1.5 rounded-full bg-gray-900"></span>1 site inclus</li>
+                <li className="flex items-center gap-2 text-sm text-muted"><ChevronRight className="w-3.5 h-3.5 stroke-[1.5] text-muted" />Collecte hebdomadaire</li>
+                <li className="flex items-center gap-2 text-sm text-muted"><ChevronRight className="w-3.5 h-3.5 stroke-[1.5] text-muted" />1 site inclus</li>
               </ul>
               <Link to="/register" className="mt-8 block w-full py-3 text-center border border-gray-200 text-sm font-medium rounded-full text-gray-500 hover:border-gray-400 hover:text-gray-700 transition-all">Commencer</Link>
             </div>
@@ -151,9 +150,9 @@ export default function LandingPage() {
               <p className="mt-4 text-4xl font-bold tracking-tight">80 <span className="text-base font-normal text-gray-400">USD/mois</span></p>
               <p className="mt-2 text-sm text-gray-400 font-light">Le meilleur rapport qualité-prix</p>
               <ul className="mt-6 space-y-3">
-                <li className="flex items-center gap-2 text-sm text-gray-300"><span className="w-1.5 h-1.5 rounded-full bg-white"></span>Collecte mensuelle</li>
-                <li className="flex items-center gap-2 text-sm text-gray-300"><span className="w-1.5 h-1.5 rounded-full bg-white"></span>3 sites inclus</li>
-                <li className="flex items-center gap-2 text-sm text-gray-300"><span className="w-1.5 h-1.5 rounded-full bg-white"></span>Support prioritaire</li>
+                <li className="flex items-center gap-2 text-sm text-gray-300"><ChevronRight className="w-3.5 h-3.5 stroke-[1.5] text-gray-300" />Collecte mensuelle</li>
+                <li className="flex items-center gap-2 text-sm text-gray-300"><ChevronRight className="w-3.5 h-3.5 stroke-[1.5] text-gray-300" />3 sites inclus</li>
+                <li className="flex items-center gap-2 text-sm text-gray-300"><ChevronRight className="w-3.5 h-3.5 stroke-[1.5] text-gray-300" />Support prioritaire</li>
               </ul>
               <Link to="/register" className="mt-8 block w-full py-3 text-center bg-white text-gray-900 text-sm font-medium rounded-full hover:bg-gray-100 transition-all">Commencer</Link>
             </div>
@@ -162,9 +161,9 @@ export default function LandingPage() {
               <p className="mt-4 text-4xl font-bold tracking-tight text-gray-900">800 <span className="text-base font-normal text-gray-400">USD/an</span></p>
               <p className="mt-2 text-sm text-gray-400 font-light">Économisez 17% par rapport au mensuel</p>
               <ul className="mt-6 space-y-3">
-                <li className="flex items-center gap-2 text-sm text-gray-500"><span className="w-1.5 h-1.5 rounded-full bg-gray-900"></span>Collecte illimitée</li>
-                <li className="flex items-center gap-2 text-sm text-gray-500"><span className="w-1.5 h-1.5 rounded-full bg-gray-900"></span>Sites illimités</li>
-                <li className="flex items-center gap-2 text-sm text-gray-500"><span className="w-1.5 h-1.5 rounded-full bg-gray-900"></span>Support dédié</li>
+                <li className="flex items-center gap-2 text-sm text-muted"><ChevronRight className="w-3.5 h-3.5 stroke-[1.5] text-muted" />Collecte illimitée</li>
+                <li className="flex items-center gap-2 text-sm text-muted"><ChevronRight className="w-3.5 h-3.5 stroke-[1.5] text-muted" />Sites illimités</li>
+                <li className="flex items-center gap-2 text-sm text-muted"><ChevronRight className="w-3.5 h-3.5 stroke-[1.5] text-muted" />Support dédié</li>
               </ul>
               <Link to="/register" className="mt-8 block w-full py-3 text-center border border-gray-200 text-sm font-medium rounded-full text-gray-500 hover:border-gray-400 hover:text-gray-700 transition-all">Commencer</Link>
             </div>
@@ -176,27 +175,25 @@ export default function LandingPage() {
       </section>
 
       {/* ============ CTA FINAL ============ */}
-      <section className="py-28 px-6 bg-black">
+      <section className="py-28 px-6 bg-foreground">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight">
             Prêt à révolutionner la gestion<br />de vos déchets ?
           </h2>
-          <p className="mt-6 text-lg text-gray-400 font-light max-w-xl mx-auto">
+          <p className="mt-6 text-lg text-muted font-light max-w-xl mx-auto">
             Rejoignez les entreprises qui optimisent déjà leur chaîne de traitement des déchets avec WasteManager.
           </p>
           <div className="mt-10">
             <Link to="/register" className="px-8 py-3.5 bg-white text-gray-900 text-sm font-medium rounded-full hover:bg-gray-100 transition-colors inline-flex items-center gap-2">
               Créer un compte gratuit
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+              <ArrowRight className="w-4 h-4 stroke-[1.5]" />
             </Link>
           </div>
         </div>
       </section>
 
       {/* ============ FOOTER ============ */}
-      <footer className="py-16 px-6 border-t border-gray-100">
+      <footer className="py-16 px-6 border-t border-border">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div>

@@ -3,6 +3,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const { connectDatabase, getStatus } = require('./utils/database');
+const { seedDatabase } = require('./utils/seed');
 
 dotenv.config();
 
@@ -79,38 +80,10 @@ app.get('/api/debug/mongo', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-// Créer un admin par défaut si aucun admin n'existe
-async function seedAdmin() {
-  try {
-    const { getModel } = require('./utils/adapter');
-    const bcrypt = require('bcryptjs');
-    const User = getModel('User');
-    
-    const existingAdmin = await User.findOne({ role: 'admin' });
-    if (!existingAdmin) {
-      const hashedPassword = await bcrypt.hash('admin123', 10);
-      await User.create({
-        name: 'Administrateur',
-        email: 'admin@wastemanager.com',
-        password: hashedPassword,
-        role: 'admin',
-        phone: '+243000000000',
-        address: 'Siège social'
-      });
-      console.log('\n👤 Admin par défaut créé:');
-      console.log('   Email: admin@wastemanager.com');
-      console.log('   Mot de passe: admin123');
-      console.log('   ⚠️  Changez ce mot de passe immédiatement!\n');
-    }
-  } catch (error) {
-    console.error('❌ Erreur création admin:', error.message);
-  }
-}
-
 // Démarrer le serveur APRÈS avoir connecté la DB
 async function start() {
   await connectDatabase();
-  await seedAdmin();
+  await seedDatabase();
   
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Serveur sur http://localhost:${PORT}`);

@@ -5,9 +5,9 @@ exports.getSites = async (req, res) => {
   try {
     const Site = getModel('Site');
     let filter = {};
-    // Staff/Admin voient tout, client voit ses sites
+    // Staff/Admin voient tout, client voit tous les sites actifs disponibles
     if (req.user.role === 'client') {
-      filter.createdBy = req.user._id;
+      filter.isActive = true;
     }
     const sites = await Site.find(filter);
     res.json(sites);

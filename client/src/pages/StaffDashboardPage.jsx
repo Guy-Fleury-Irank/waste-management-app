@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import api from '../services/api';
-import { useAuth } from '../hooks/useAuth';
 
 export default function StaffDashboardPage() {
-  const { user } = useAuth();
   const [users, setUsers] = useState([]);
   const [subscriptions, setSubscriptions] = useState([]);
   const [collectes, setCollectes] = useState([]);
@@ -21,7 +19,7 @@ export default function StaffDashboardPage() {
         setUsers(usersRes.data || []);
         setSubscriptions(subsRes.data || []);
         setCollectes(collectesRes.data || []);
-      } catch (err) {
+      } catch {
         // handled by interceptor
       } finally {
         setLoading(false);
@@ -46,7 +44,7 @@ export default function StaffDashboardPage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">
           Tableau de bord Staff
         </h1>
         <p className="mt-1 text-sm text-gray-400 font-light">
@@ -56,21 +54,21 @@ export default function StaffDashboardPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-gray-50 rounded-2xl p-6">
-          <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Clients</p>
-          <p className="mt-2 text-2xl font-bold tracking-tight text-gray-900">{clients.length}</p>
+        <div className="bg-surface border border-border rounded-sm p-6">
+          <p className="text-xs font-medium text-muted uppercase tracking-wider">Clients</p>
+          <p className="mt-2 text-2xl font-bold tracking-tight text-foreground font-mono">{clients.length}</p>
         </div>
-        <div className="bg-gray-50 rounded-2xl p-6">
-          <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Abonnements actifs</p>
-          <p className="mt-2 text-2xl font-bold tracking-tight text-gray-900">{activeSubs.length}</p>
+        <div className="bg-surface border border-border rounded-sm p-6">
+          <p className="text-xs font-medium text-muted uppercase tracking-wider">Abonnements actifs</p>
+          <p className="mt-2 text-2xl font-bold tracking-tight text-foreground font-mono">{activeSubs.length}</p>
         </div>
-        <div className="bg-gray-50 rounded-2xl p-6">
-          <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Collectes</p>
-          <p className="mt-2 text-2xl font-bold tracking-tight text-gray-900">{collectes.length}</p>
+        <div className="bg-surface border border-border rounded-sm p-6">
+          <p className="text-xs font-medium text-muted uppercase tracking-wider">Collectes</p>
+          <p className="mt-2 text-2xl font-bold tracking-tight text-foreground font-mono">{collectes.length}</p>
         </div>
-        <div className="bg-gray-50 rounded-2xl p-6">
-          <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Volume total</p>
-          <p className="mt-2 text-2xl font-bold tracking-tight text-gray-900">{totalCollected} kg</p>
+        <div className="bg-surface border border-border rounded-sm p-6">
+          <p className="text-xs font-medium text-muted uppercase tracking-wider">Volume total</p>
+          <p className="mt-2 text-2xl font-bold tracking-tight text-foreground font-mono">{totalCollected} kg</p>
         </div>
       </div>
 
@@ -83,8 +81,8 @@ export default function StaffDashboardPage() {
         ].map(tab => (
           <button key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-1.5 text-xs font-medium rounded-full transition-all ${
-              activeTab === tab.id ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-400 hover:text-gray-700'
+            className={`px-4 py-1.5 text-xs font-medium rounded-sm transition-all ${
+              activeTab === tab.id ? 'bg-foreground text-white' : 'bg-surface text-muted hover:text-strong'
             }`}>
             {tab.label}
           </button>
@@ -96,39 +94,39 @@ export default function StaffDashboardPage() {
         <div className="space-y-6">
           <div>
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Abonnements récents</h2>
-            <div className="overflow-hidden rounded-2xl border border-gray-100">
+            <div className="overflow-hidden border border-border rounded-sm">
               <table className="w-full">
                 <thead>
-                  <tr className="bg-gray-50">
-                    <th className="text-left px-5 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider">Client</th>
-                    <th className="text-left px-5 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider">Type</th>
-                    <th className="text-left px-5 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider">Montant</th>
-                    <th className="text-left px-5 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider">Paiement</th>
-                    <th className="text-left px-5 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider">Statut</th>
-                  </tr>
+                    <tr className="bg-surface">
+                      <th className="text-left px-5 py-3 text-xs font-medium text-muted uppercase tracking-wider">Client</th>
+                      <th className="text-left px-5 py-3 text-xs font-medium text-muted uppercase tracking-wider">Type</th>
+                      <th className="text-left px-5 py-3 text-xs font-medium text-muted uppercase tracking-wider">Montant</th>
+                      <th className="text-left px-5 py-3 text-xs font-medium text-muted uppercase tracking-wider">Paiement</th>
+                      <th className="text-left px-5 py-3 text-xs font-medium text-muted uppercase tracking-wider">Statut</th>
+                    </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-50">
                   {subscriptions.slice(0, 10).map(sub => (
-                    <tr key={sub._id} className="hover:bg-gray-50">
-                      <td className="px-5 py-3 text-sm text-gray-900">{sub.client}</td>
-                      <td className="px-5 py-3 text-sm text-gray-500">{sub.type}</td>
-                      <td className="px-5 py-3 text-sm text-gray-500">{sub.amount} {sub.currency}</td>
-                      <td className="px-5 py-3">
-                        <span className="px-2.5 py-0.5 text-xs font-medium rounded-full bg-gray-100 text-gray-500">
-                          {sub.paymentMethod}
-                        </span>
-                      </td>
-                      <td className="px-5 py-3">
-                        <span className={`px-3 py-1 text-xs font-medium rounded-full ${
-                          sub.status === 'actif' ? 'bg-gray-900 text-white' :
-                          sub.status === 'suspendu' ? 'bg-blue-50 text-blue-600' :
-                          sub.status === 'expire' ? 'bg-gray-100 text-gray-500' :
-                          'bg-red-50 text-red-500'
-                        }`}>
-                          {sub.status}
-                        </span>
-                      </td>
-                    </tr>
+                      <tr key={sub._id} className="hover:bg-surface">
+                        <td className="px-5 py-3 text-sm text-foreground">{sub.client}</td>
+                        <td className="px-5 py-3 text-sm text-muted">{sub.type}</td>
+                        <td className="px-5 py-3 text-sm text-muted">{sub.amount} {sub.currency}</td>
+                        <td className="px-5 py-3">
+                          <span className="px-2.5 py-0.5 text-xs font-medium rounded-sm bg-surface text-muted">
+                            {sub.paymentMethod}
+                          </span>
+                        </td>
+                        <td className="px-5 py-3">
+                          <span className={`px-3 py-1 text-xs font-medium rounded-sm font-mono ${
+                            sub.status === 'actif' ? 'bg-foreground text-white' :
+                            sub.status === 'suspendu' ? 'bg-blue-50 text-blue-600' :
+                            sub.status === 'expire' ? 'bg-surface text-muted' :
+                            'bg-red-50 text-red-500'
+                          }`}>
+                            {sub.status}
+                          </span>
+                        </td>
+                      </tr>
                   ))}
                 </tbody>
               </table>

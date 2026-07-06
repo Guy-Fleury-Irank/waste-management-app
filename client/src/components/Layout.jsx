@@ -23,15 +23,15 @@ export default function Layout({ children }) {
       <Sidebar />
       <div className="flex-1 flex flex-col">
         {/* Header xAI */}
-        <header className="bg-white border-b border-gray-100 px-8 py-4 flex items-center justify-between">
+        <header className="bg-surface border-b border-border px-8 py-4 flex items-center justify-between">
           <h1 className="text-base font-medium text-gray-900 capitalize">
             {pageTitle}
           </h1>
           <div className="flex items-center gap-6">
-            <span className="text-sm text-gray-400 font-light">{user?.name}</span>
+            <span className="text-sm font-mono text-muted">{user?.name}</span>
             <button
               onClick={async () => { await logout(); navigate('/login'); }}
-              className="text-sm text-gray-300 hover:text-gray-700 transition-colors font-light"
+              className="text-sm font-medium text-muted hover:text-strong transition-colors"
             >
               Déconnexion
             </button>

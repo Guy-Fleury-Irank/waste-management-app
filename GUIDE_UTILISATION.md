@@ -10,13 +10,14 @@ Application web de gestion des déchets pour entreprises de collecte.
 1. [Prérequis](#1--prérequis)
 2. [Installation](#2--installation)
 3. [Lancement de l'application](#3--lancement-de-lapplication)
-4. [Comptes par défaut](#4--comptes-par-défaut)
-5. [Cas d'utilisation — Client](#5--cas-dutilisation--client)
-6. [Cas d'utilisation — Staff](#6--cas-dutilisation--staff)
-7. [Cas d'utilisation — Admin](#7--cas-dutilisation--admin)
-8. [Structure des routes](#8--structure-des-routes)
-9. [API Backend](#9--api-backend)
-10. [Dépannage](#10--dépannage)
+4. [Comptes de test et parcours utilisateur](#4--comptes-de-test-et-parcours-utilisateur)
+5. [Scénarios de test](#5--scenarios-de-test)
+6. [Cas d'utilisation — Client](#6--cas-dutilisation--client)
+7. [Cas d'utilisation — Staff](#7--cas-dutilisation--staff)
+8. [Cas d'utilisation — Admin](#8--cas-dutilisation--admin)
+9. [Structure des routes](#9--structure-des-routes)
+10. [API Backend](#10--api-backend)
+11. [Dépannage](#11--dépannage)
 
 ---
 
@@ -90,180 +91,189 @@ Le frontend démarre sur **http://localhost:5173**.
 
 ---
 
-## 4. Comptes par défaut
+## 4. Comptes de test et parcours utilisateur
 
-### Admin (créé automatiquement au premier lancement)
+### Comptes recommandés
 
-| Champ | Valeur |
-|-------|--------|
-| Email | `admin@wastemanager.com` |
-| Mot de passe | `admin123` |
+| Rôle | Email | Mot de passe | Utilisation principale |
+|------|-------|--------------|------------------------|
+| Admin | `admin@wastemanager.com` | `admin123` | Gestion globale, utilisateurs, sites, véhicules, collectes, abonnements |
+| Staff | `staff@wastemanager.com` | `staff123` | Dashboard staff, collectes, véhicules, sites, profil |
+| Client | `client@wastemanager.com` | `client123` | Dashboard client, abonnements, sites, profil |
 
-> ⚠️ **Changez ce mot de passe immédiatement en production !**
+> Le compte admin est créé automatiquement au premier lancement. Les comptes staff et client peuvent être créés via l'inscription, puis l'admin peut ajuster le rôle si nécessaire.
 
-### Créer un compte Staff ou Client
+### Création d'un compte staff ou client
 
-1. Allez sur http://localhost:5173/register
-2. Remplissez le formulaire (nom, email, mot de passe, téléphone, adresse)
-3. Le rôle par défaut est `client`
-4. L'admin peut ensuite changer le rôle via la page `/users`
+1. Ouvrez http://localhost:5173/register
+2. Remplissez le formulaire avec :
+   - Nom complet : `Lucas Martin` / `Julie Moreau` / `Sophie Durand`
+   - Email : `staff@wastemanager.com` ou `client@wastemanager.com`
+   - Mot de passe : `staff123` ou `client123`
+   - Téléphone : `+33 6 12 34 56 78`
+   - Adresse : `15 Rue des Archives, 75003 Paris`
+3. Cliquez sur **S'inscrire**
+4. Le compte est créé en tant que client par défaut
+5. Si vous voulez un compte staff, connectez-vous en admin et modifiez le rôle depuis `/users`
+
+### Si l'utilisateur a déjà créé son compte
+
+1. Ouvrez http://localhost:5173/login
+2. Entrez l'email et le mot de passe de l'un des comptes ci-dessus
+3. Cliquez sur **Se connecter**
+4. L'utilisateur est redirigé vers le tableau de bord correspondant à son rôle
 
 ---
 
-## 5. Cas d'utilisation — Client
+## 5. Scénarios de test
 
-### 5.1 Inscription
+### Scénario 1 — Parcours Admin complet
+1. Démarrez le backend et le frontend, puis ouvrez http://localhost:5173
+2. Connectez-vous en admin :
+   - Email : `admin@wastemanager.com`
+   - Mot de passe : `admin123`
+3. Accédez à `/dashboard` et vérifiez les statistiques globales
+4. Allez sur `/users` et :
+   - créez `Sophie Dupont` / `sophie.dupont@wastemanager.com` / `sophie123`
+   - créez `Romain Bernard` / `romain.bernard@wastemanager.com` / `romain123`
+   - changez le rôle de `client@wastemanager.com` en `staff` si nécessaire
+5. Allez sur `/sites` et créez un site :
+   - Nom : `Entrepôt Sud`
+   - Adresse : `55 Avenue de la République, 92110 Clichy`
+   - Type : `Déchargement`
+6. Allez sur `/vehicules` et ajoutez un véhicule :
+   - Plaque : `RV-9001`
+   - Marque / Modèle : `Volvo FM`
+   - Type : `Benne`
+   - Capacité : `2500 kg`
+   - Statut : `Disponible`
+7. Allez sur `/collectes` et créez une collecte :
+   - Site : `Entrepôt Sud`
+   - Véhicule : `RV-9001 / Volvo FM`
+   - Statut : `Planifiée`
+8. Vérifiez `/abonnements` et notez que les plans sont affichés correctement
+9. Ouvrez `/profile`, mettez à jour le téléphone et l'adresse puis enregistrez
+10. Déconnectez-vous et reconnectez-vous pour valider que les modifications ont bien été conservées
 
-1. Ouvrez http://localhost:5173/register
-2. Remplissez : **Nom**, **Email**, **Mot de passe**, **Téléphone**, **Adresse**
-3. Cliquez sur **S'inscrire**
-4. Redirection automatique vers `/client-dashboard`
+### Scénario 2 — Parcours Staff
+1. Connectez-vous en staff :
+   - Email : `staff@wastemanager.com`
+   - Mot de passe : `staff123`
+2. Accédez à `/staff-dashboard`
+3. Vérifiez les onglets : Vue d'ensemble, Clients & Paiements, Collectes
+4. Allez sur `/collectes`, sélectionnez une collecte et changez son statut en `En cours`
+5. Allez sur `/vehicules` et mettez à jour le statut d'un véhicule, par exemple `En maintenance`
+6. Allez sur `/sites`, modifiez un site existant et enregistrez les changements
+7. Ouvrez `/profile`, modifiez le téléphone et l'adresse, puis déconnectez-vous
 
-### 5.2 Connexion
+### Scénario 3 — Parcours Client
+1. Connectez-vous en client :
+   - Email : `client@wastemanager.com`
+   - Mot de passe : `client123`
+2. Accédez à `/client-dashboard` et vérifiez le résumé des collectes et abonnements
+3. Allez sur `/abonnements`, choisissez `Plan mensuel` et sélectionnez `PayPal`
+4. Allez sur `/sites` et ajoutez un nouveau site :
+   - Nom : `Site centre-ville`
+   - Adresse : `12 Boulevard Saint-Germain, 75005 Paris`
+   - Type : `Collecte sélective`
+5. Ouvrez `/profile`, mettez à jour votre numéro de téléphone et adresse
+6. Déconnectez-vous pour vérifier la fin de session
 
-1. Ouvrez http://localhost:5173/login
-2. Entrez votre email et mot de passe
-3. Cliquez sur **Se connecter**
-4. Redirection vers `/client-dashboard`
+---
 
-### 5.3 Tableau de bord client (`/client-dashboard`)
+## 6. Cas d'utilisation — Client
 
-- **Abonnement actif** : Voir le type, le statut de paiement, la date de fin
-- **Statistiques** : Nombre de collectes, sites, abonnements
-- **Historique** : Liste des collectes récentes
+### 5.1 Parcours client
 
-### 5.4 Créer un abonnement (`/abonnements`)
+1. Connectez-vous en tant que client :
+   - Email : `client@wastemanager.com`
+   - Mot de passe : `client123`
+2. Accédez à `/client-dashboard`
+3. Vérifiez les statistiques de votre compte et l'historique des collectes
+4. Allez sur `/abonnements` pour souscrire :
+   - `Plan hebdomadaire` — 25 USD/sem
+   - `Plan mensuel` — 80 USD/mois
+   - `Plan annuel` — 800 USD/an
+   - Mode de paiement : `Carte de crédit`, `PayPal`, `Lumicash`, `Dépôt au siège`
+5. Allez sur `/sites` pour ajouter un site client
+6. Allez sur `/profile` pour mettre à jour :
+   - Nom, email, téléphone, adresse
+   - Mot de passe
+7. Déconnectez-vous via le bouton dans l'en-tête
 
-1. Cliquez sur **Abonnements** dans le menu
-2. Choisissez un plan :
+### Exemples de données à créer pour un client
 
-| Plan | Prix | Description |
-|------|------|-------------|
-| Hebdomadaire | 25 USD/sem | Collecte chaque semaine |
-| Mensuel | 80 USD/mois | Collecte chaque mois |
-| Annuel | 800 USD/an | Collecte chaque année |
-
-3. Activez le toggle **Organisation** si vous êtes une entreprise (+30%)
-4. Choisissez un **mode de paiement** :
-   - Carte de crédit
-   - PayPal
-   - Lumicash
-   - Dépôt au siège
-5. Cliquez sur **Souscrire**
-
-### 5.5 Gérer ses sites (`/sites`)
-
-1. Cliquez sur **Sites** dans le menu
-2. Cliquez sur **Ajouter un site**
-3. Remplissez : nom, adresse, type, coordonnées GPS
-4. Le site est lié à votre compte
-
-### 5.6 Profil (`/profile`)
-
-- Voir et modifier vos informations personnelles
-- Changer votre mot de passe
+- Site : `Site centre-ville`
+  - Adresse : `12 Boulevard Saint-Germain, 75005 Paris`
+  - Type : `Collecte sélective`
+  - Coordonnées GPS : `48.852968, 2.349902`
+- Abonnement : `Mensuel`, `PayPal`
 
 ---
 
 ## 6. Cas d'utilisation — Staff
 
-### 6.1 Connexion
+### 6.1 Parcours staff
 
-1. Connectez-vous avec vos identifiants staff
-2. Redirection vers `/staff-dashboard`
+1. Connectez-vous en tant que staff :
+   - Email : `staff@wastemanager.com`
+   - Mot de passe : `staff123`
+2. Accédez à `/staff-dashboard`
+3. Vérifiez les onglets : Vue d'ensemble, Clients & Paiements, Collectes
+4. Allez sur `/collectes` pour créer ou modifier des collectes
+5. Allez sur `/vehicules` pour ajouter un véhicule ou mettre à jour un statut
+6. Allez sur `/sites` pour consulter et modifier des sites
+7. Allez sur `/profile` pour mettre à jour vos informations
+8. Déconnectez-vous via le bouton dans l'en-tête
 
-### 6.2 Tableau de bord staff (`/staff-dashboard`)
+### Exemples de données de test pour le staff
 
-Le dashboard staff comporte **3 onglets** :
-
-#### Onglet 1 : Vue d'ensemble
-- Statistiques globales (collectes, sites, abonnements)
-- Graphiques de performance
-
-#### Onglet 2 : Clients & Paiements
-- Liste des clients inscrits
-- Statut des paiements (en attente, payé, en retard)
-- Filtres par statut
-
-#### Onglet 3 : Collectes
-- Liste des collectes à gérer
-- Créer une nouvelle collecte
-- Modifier le statut d'une collecte (planifiée → en cours → terminée)
-
-### 6.3 Gérer les collectes (`/collectes`)
-
-1. Cliquez sur **Collectes** dans le menu
-2. **Créer** : Choisir le site, le véhicule, la date, le type de déchet
-3. **Modifier** : Changer le statut, la date, les détails
-4. **Supprimer** : Supprimer une collecte (si autorisé)
-
-### 6.4 Gérer les véhicules (`/vehicules`)
-
-1. Cliquez sur **Véhicules** dans le menu
-2. **Ajouter** : Immatriculation, type, capacité, statut
-3. **Modifier** : Mettre à jour les informations
-4. **Supprimer** : Retirer un véhicule
-
-### 6.5 Gérer les sites (`/sites`)
-
-- Voir tous les sites
-- Ajouter/modifier des sites
-- Pas de suppression (admin uniquement)
-
-### 6.6 Voir les abonnements (`/abonnements`)
-
-- Consulter les abonnements des clients
-- Voir les statuts de paiement
+- Véhicule : `SN-1122 / Renault Master`
+  - Type : `Benne`
+  - Capacité : `1200 kg`
+  - Statut : `Disponible`
+- Véhicule : `CA-7703 / Iveco Daily`
+  - Type : `Compact`
+  - Capacité : `900 kg`
+  - Statut : `En maintenance`
+- Site : `Local de recyclage Nord`
+  - Adresse : `8 Rue du Nord, 93500 Pantin`
+  - Type : `Recyclage`
+- Collecte : `Collecte tri sélectif`
+  - Statut : `Planifiée` / `En cours` / `Terminée`
 
 ---
 
 ## 7. Cas d'utilisation — Admin
 
-### 7.1 Connexion
+### 7.1 Parcours admin
 
-1. Connectez-vous avec `admin@wastemanager.com` / `admin123`
-2. Redirection vers `/dashboard`
+1. Connectez-vous en tant qu'admin :
+   - Email : `admin@wastemanager.com`
+   - Mot de passe : `admin123`
+2. Accédez à `/dashboard`
+3. Vérifiez les statistiques globales de l'application
+4. Allez sur `/users` pour :
+   - Créer un utilisateur : `Sophie Dupont`, `sophie.dupont@wastemanager.com`, `sophie123`, rôle `client`
+   - Modifier un utilisateur : changer `client@wastemanager.com` en `staff`
+   - Supprimer un utilisateur de test
+5. Allez sur `/sites` pour créer ou modifier un site global
+6. Allez sur `/vehicules` pour ajouter un véhicule de flotte
+7. Allez sur `/collectes` pour affecter des collectes aux véhicules
+8. Allez sur `/abonnements` pour vérifier les plans et les paiements
+9. Allez sur `/profile` pour mettre à jour les informations de l'admin
+10. Déconnectez-vous via le bouton dans l'en-tête
 
-### 7.2 Tableau de bord admin (`/dashboard`)
+### Exemples de données de test pour l'admin
 
-- **Statistiques complètes** : Utilisateurs, collectes, sites, abonnements
-- **Vue d'ensemble** de l'activité de l'entreprise
-
-### 7.3 Gestion des utilisateurs (`/users`)
-
-1. Cliquez sur **Utilisateurs** dans le menu
-2. **Liste** : Voir tous les utilisateurs (clients, staff, admin)
-3. **Créer** : Ajouter un nouvel utilisateur avec un rôle spécifique
-4. **Modifier** : Changer le rôle, les informations d'un utilisateur
-5. **Supprimer** : Supprimer un utilisateur du système
-6. **Changer le rôle** : Promouvoir un client en staff, ou rétrograder un staff
-
-### 7.4 Gestion des sites (`/sites`)
-
-- CRUD complet (Créer, Lire, Modifier, Supprimer)
-- Vue de tous les sites de tous les clients
-
-### 7.5 Gestion des véhicules (`/vehicules`)
-
-- CRUD complet
-- Suivi de la flotte de véhicules
-
-### 7.6 Gestion des collectes (`/collectes`)
-
-- CRUD complet
-- Assignation des collectes aux véhicules
-- Suivi des statuts
-
-### 7.7 Gestion des abonnements (`/abonnements`)
-
-- Voir tous les abonnements
-- Suivre les paiements
-- Gérer les expirations
-
-### 7.8 Profil (`/profile`)
-
-- Voir et modifier ses informations personnelles
-- Changer son mot de passe
+- Utilisateur staff : `Camille Lefèvre`, `camille.lefevre@wastemanager.com`, `camille123`, rôle `staff`
+- Utilisateur client : `Romain Bernard`, `romain.bernard@wastemanager.com`, `romain123`, rôle `client`
+- Site : `Entrepôt Sud`
+  - Adresse : `55 Avenue de la République, 92110 Clichy`
+  - Type : `Déchargement`
+- Collecte : `Collecte industrielle`
+  - Véhicule : `RV-9001 / Volvo FM`
+  - Statut : `En cours`
 
 ---
 

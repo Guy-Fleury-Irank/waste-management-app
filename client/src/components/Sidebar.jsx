@@ -1,25 +1,28 @@
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { BarChart3, Users, MapPin, Truck, ClipboardList, User, Wrench } from 'lucide-react';
 
 export default function Sidebar() {
   const { user } = useAuth();
 
+  const iconClass = "w-4 h-4 stroke-[1.5]";
+
   const navItems = [
-    { label: 'Tableau de bord', path: '/dashboard', icon: '📊', roles: ['admin'] },
-    { label: 'Tableau de bord', path: '/staff-dashboard', icon: '📊', roles: ['staff'] },
-    { label: 'Mon tableau', path: '/client-dashboard', icon: '📊', roles: ['client'] },
-    { label: 'Utilisateurs', path: '/users', icon: '👥', roles: ['admin'] },
-    { label: 'Sites', path: '/sites', icon: '📍', roles: ['admin', 'staff', 'client'] },
-    { label: 'Collectes', path: '/collectes', icon: '🚛', roles: ['admin', 'staff'] },
-    { label: 'Véhicules', path: '/vehicules', icon: '🚚', roles: ['admin', 'staff'] },
-    { label: 'Abonnements', path: '/abonnements', icon: '📋', roles: ['admin', 'staff', 'client'] },
-    { label: 'Mon profil', path: '/profile', icon: '👤', roles: ['admin', 'staff', 'client'] },
+    { label: 'Tableau de bord', path: '/dashboard', icon: <BarChart3 className={iconClass} />, roles: ['admin'] },
+    { label: 'Tableau de bord', path: '/staff-dashboard', icon: <BarChart3 className={iconClass} />, roles: ['staff'] },
+    { label: 'Mon tableau', path: '/client-dashboard', icon: <BarChart3 className={iconClass} />, roles: ['client'] },
+    { label: 'Utilisateurs', path: '/users', icon: <Users className={iconClass} />, roles: ['admin'] },
+    { label: 'Sites', path: '/sites', icon: <MapPin className={iconClass} />, roles: ['admin', 'staff', 'client'] },
+    { label: 'Collectes', path: '/collectes', icon: <Truck className={iconClass} />, roles: ['admin', 'staff'] },
+    { label: 'Véhicules', path: '/vehicules', icon: <Truck className={iconClass} />, roles: ['admin', 'staff'] },
+    { label: 'Abonnements', path: '/abonnements', icon: <ClipboardList className={iconClass} />, roles: ['admin', 'staff', 'client'] },
+    { label: 'Mon profil', path: '/profile', icon: <User className={iconClass} />, roles: ['admin', 'staff', 'client'] },
   ];
 
   const filteredItems = navItems.filter(item => item.roles.includes(user?.role));
 
   return (
-    <aside className="w-60 bg-white border-r border-gray-100 min-h-screen flex flex-col">
+    <aside className="w-60 bg-surface border-r border-border min-h-screen flex flex-col">
       {/* Header sidebar xAI */}
       <div className="px-5 py-5 border-b border-gray-100">
         <h1 className="text-base font-bold tracking-tight text-gray-900">
@@ -42,7 +45,7 @@ export default function Sidebar() {
               }`
             }
           >
-            <span className="text-base">{item.icon}</span>
+            <span className="flex items-center">{item.icon}</span>
             <span>{item.label}</span>
           </NavLink>
         ))}
@@ -60,7 +63,7 @@ export default function Sidebar() {
             }`
           }
         >
-          <span>🔧</span>
+          <Wrench className="w-3.5 h-3.5 stroke-[1.5]" />
           <span>Diagnostic MongoDB</span>
         </NavLink>
       </div>

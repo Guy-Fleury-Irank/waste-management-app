@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useState, useEffect, useCallback } from 'react';
 import api from '../services/api';
 
@@ -16,7 +17,7 @@ export function AuthProvider({ children }) {
           // Validate token with server by calling protected endpoint
           const { data } = await api.get('/auth/me');
           setUser(data);
-        } catch (err) {
+        } catch {
           // Token invalid or expired, clear storage
           localStorage.removeItem('user');
         }
@@ -66,7 +67,7 @@ export function AuthProvider({ children }) {
     // Call server to clear cookie, then clear local state
     try {
       await api.post('/auth/logout');
-    } catch (err) {
+    } catch {
       // Ignore errors — cookie may already be gone
     }
     

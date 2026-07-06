@@ -111,9 +111,9 @@ export default function CollectesPage() {
   };
 
   const statusColors = {
-    planifie: 'bg-gray-100 text-gray-500',
+    planifie: 'bg-surface text-muted',
     en_cours: 'bg-blue-50 text-blue-600',
-    termine: 'bg-gray-900 text-white',
+    termine: 'bg-foreground text-white',
     annule: 'bg-red-50 text-red-500'
   };
 
@@ -124,9 +124,9 @@ export default function CollectesPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">Collectes</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">Collectes</h1>
         {isStaffOrAdmin && (
-          <button onClick={openCreate} className="px-5 py-2.5 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-colors">
+          <button onClick={openCreate} className="px-4 py-2 border border-border bg-surface text-foreground text-sm font-medium rounded-sm hover:border-strong transition-colors">
             + Nouvelle collecte
           </button>
         )}
@@ -136,8 +136,8 @@ export default function CollectesPage() {
       <div className="flex gap-2 mb-6">
         {['', 'planifie', 'en_cours', 'termine', 'annule'].map((s) => (
           <button key={s} onClick={() => setFilter(s)}
-            className={`px-4 py-1.5 text-xs rounded-full transition-colors ${
-              filter === s ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-400 hover:text-gray-700 hover:bg-gray-100'
+            className={`px-4 py-1.5 text-xs rounded-sm transition-colors ${
+              filter === s ? 'bg-foreground text-white' : 'bg-surface text-muted hover:text-strong hover:bg-surface/80'
             }`}>
             {s === '' ? 'Tous' : s === 'en_cours' ? 'En cours' : s.charAt(0).toUpperCase() + s.slice(1)}
           </button>
@@ -147,8 +147,8 @@ export default function CollectesPage() {
       {/* Modal Form */}
       {showForm && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50" onClick={() => setShowForm(false)}>
-          <div className="bg-white rounded-2xl p-6 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto shadow-xl" onClick={(e) => e.stopPropagation()}>
-            <h2 className="text-lg font-bold text-gray-900 mb-5">{editing ? 'Modifier' : 'Nouvelle'} collecte</h2>
+          <div className="bg-surface border border-border rounded-sm p-6 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <h2 className="text-lg font-bold text-foreground mb-5">{editing ? 'Modifier' : 'Nouvelle'} collecte</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="label-xai">Date & heure</label>
@@ -204,8 +204,8 @@ export default function CollectesPage() {
                     )}
                   </div>
                 ))}
-                <p className="text-xs text-gray-400 mt-2">
-                  Volume total: <strong className="text-gray-700">{totalVolume}</strong> kg/L
+                <p className="text-xs text-muted mt-2">
+                  Volume total: <strong className="font-mono text-foreground">{totalVolume}</strong> kg/L
                 </p>
               </div>
               <div>
@@ -214,11 +214,11 @@ export default function CollectesPage() {
                   className="input-xai resize-none" />
               </div>
               <div className="flex gap-3 pt-3">
-                <button type="submit" className="flex-1 py-2.5 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-colors">
+                <button type="submit" className="flex-1 py-2.5 bg-foreground text-white text-sm font-medium rounded-sm hover:bg-strong transition-colors">
                   {editing ? 'Modifier' : 'Créer'}
                 </button>
                 <button type="button" onClick={() => setShowForm(false)}
-                  className="flex-1 py-2.5 border border-gray-200 text-gray-500 text-sm font-medium rounded-full hover:border-gray-400 transition-colors">Annuler</button>
+                  className="flex-1 py-2.5 border border-border text-muted text-sm font-medium rounded-sm hover:border-strong transition-colors">Annuler</button>
               </div>
             </form>
           </div>
@@ -226,44 +226,44 @@ export default function CollectesPage() {
       )}
 
       {/* Table */}
-      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+      <div className="bg-surface border border-border overflow-hidden rounded-sm">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-gray-100">
-              <th className="text-left px-5 py-3.5 text-xs font-medium text-gray-400 uppercase tracking-wider">Date</th>
-              <th className="text-left px-5 py-3.5 text-xs font-medium text-gray-400 uppercase tracking-wider">Site</th>
-              <th className="text-left px-5 py-3.5 text-xs font-medium text-gray-400 uppercase tracking-wider">Véhicule</th>
-              <th className="text-left px-5 py-3.5 text-xs font-medium text-gray-400 uppercase tracking-wider">Volume</th>
-              <th className="text-left px-5 py-3.5 text-xs font-medium text-gray-400 uppercase tracking-wider">Statut</th>
-              <th className="text-right px-5 py-3.5 text-xs font-medium text-gray-400 uppercase tracking-wider">Actions</th>
+            <tr className="border-b border-border bg-surface">
+              <th className="text-left px-5 py-3.5 text-xs font-medium text-muted uppercase tracking-wider">Date</th>
+              <th className="text-left px-5 py-3.5 text-xs font-medium text-muted uppercase tracking-wider">Site</th>
+              <th className="text-left px-5 py-3.5 text-xs font-medium text-muted uppercase tracking-wider">Véhicule</th>
+              <th className="text-left px-5 py-3.5 text-xs font-medium text-muted uppercase tracking-wider">Volume</th>
+              <th className="text-left px-5 py-3.5 text-xs font-medium text-muted uppercase tracking-wider">Statut</th>
+              <th className="text-right px-5 py-3.5 text-xs font-medium text-muted uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50">
+          <tbody className="divide-y divide-border">
             {filteredCollectes.map((c) => (
-              <tr key={c._id} className="hover:bg-gray-50 transition-colors">
-                <td className="px-5 py-4 text-sm text-gray-700">{new Date(c.date).toLocaleDateString('fr-FR')}</td>
-                <td className="px-5 py-4 text-sm text-gray-900 font-medium">{c.site?.name || '-'}</td>
-                <td className="px-5 py-4 text-sm text-gray-500">{c.vehicle?.plate || '-'}</td>
-                <td className="px-5 py-4 text-sm text-gray-500">{c.totalVolume || '-'}</td>
+              <tr key={c._id} className="hover:bg-surface transition-colors">
+                <td className="px-5 py-4 text-sm text-muted">{new Date(c.date).toLocaleDateString('fr-FR')}</td>
+                <td className="px-5 py-4 text-sm text-foreground font-medium">{c.site?.name || '-'}</td>
+                <td className="px-5 py-4 text-sm text-muted">{c.vehicle?.plate || '-'}</td>
+                <td className="px-5 py-4 text-sm font-mono text-foreground">{c.totalVolume || '-'}</td>
                 <td className="px-5 py-4">
                   {isStaffOrAdmin ? (
                     <select value={c.status} onChange={(e) => handleStatusChange(c._id, e.target.value)}
-                      className={`px-3 py-1 text-xs rounded-full border-0 font-medium ${statusColors[c.status]}`}>
+                      className={`px-3 py-1 text-xs rounded-sm border-0 font-medium ${statusColors[c.status]}`}>
                       <option value="planifie">Planifié</option>
                       <option value="en_cours">En cours</option>
                       <option value="termine">Terminé</option>
                       <option value="annule">Annulé</option>
                     </select>
                   ) : (
-                    <span className={`px-3 py-1 text-xs rounded-full ${statusColors[c.status]}`}>{c.status}</span>
+                    <span className={`px-3 py-1 text-xs rounded-sm ${statusColors[c.status]} font-mono`}>{c.status}</span>
                   )}
                 </td>
                 <td className="px-5 py-4 text-right">
                   {isStaffOrAdmin && (
                     <>
-                      <button onClick={() => openEdit(c)} className="text-sm text-gray-400 hover:text-gray-900 transition-colors mr-4">Modifier</button>
+                      <button onClick={() => openEdit(c)} className="text-sm text-muted hover:text-strong transition-colors mr-4">Modifier</button>
                       {user?.role === 'admin' && (
-                        <button onClick={() => handleDelete(c._id)} className="text-sm text-gray-300 hover:text-red-500 transition-colors">Supprimer</button>
+                        <button onClick={() => handleDelete(c._id)} className="text-sm text-red-500 hover:text-red-600 transition-colors">Supprimer</button>
                       )}
                     </>
                   )}
@@ -271,7 +271,7 @@ export default function CollectesPage() {
               </tr>
             ))}
             {filteredCollectes.length === 0 && (
-              <tr><td colSpan={6} className="text-center py-12 text-sm text-gray-300 font-light">Aucune collecte trouvée</td></tr>
+              <tr><td colSpan={6} className="text-center py-12 text-sm text-muted font-light">Aucune collecte trouvée</td></tr>
             )}
           </tbody>
         </table>

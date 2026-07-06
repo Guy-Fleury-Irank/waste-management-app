@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import api from '../services/api';
 import toast from 'react-hot-toast';
 
 const ROLE_OPTIONS = ['client', 'staff', 'admin'];
-const STATUS_OPTIONS = ['all', 'actif', 'inactif'];
 
 export default function UsersPage() {
   const [users, setUsers] = useState([]);
@@ -15,19 +14,27 @@ export default function UsersPage() {
     name: '', email: '', password: '', phone: '', address: '', role: 'client'
   });
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       const params = filterRole ? { role: filterRole } : {};
       const { data } = await api.get('/users', { params });
       setUsers(data || []);
-    } catch (err) {
+    } catch {
       // handled by interceptor
     } finally {
       setLoading(false);
     }
-  };
+  }, [filterRole]);
 
-  useEffect(() => { fetchUsers(); }, [filterRole]);
+  useEffect(() => {
+    (async () => {
+      try {
+        await fetchUsers();
+      } catch {
+        // handled
+      }
+    })();
+  }, [fetchUsers]);
 
   const openCreate = () => {
     setEditUser(null);
@@ -64,7 +71,7 @@ export default function UsersPage() {
       }
       setShowModal(false);
       fetchUsers();
-    } catch (err) {
+    } catch {
       // handled by interceptor
     }
   };
@@ -74,7 +81,7 @@ export default function UsersPage() {
       await api.put(`/users/${user._id}`, { isActive: !user.isActive });
       toast.success(user.isActive ? 'Utilisateur désactivé' : 'Utilisateur activé');
       fetchUsers();
-    } catch (err) { /* handled */ }
+    } catch { /* handled */ }
   };
 
   const deleteUser = async (user) => {
@@ -83,7 +90,7 @@ export default function UsersPage() {
       await api.delete(`/users/${user._id}`);
       toast.success('Utilisateur supprimé');
       fetchUsers();
-    } catch (err) { /* handled */ }
+    } catch { /* handled */ }
   };
 
   if (loading) {
@@ -99,11 +106,11 @@ export default function UsersPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Utilisateurs</h1>
-          <p className="mt-1 text-sm text-gray-400 font-light">Gestion des comptes utilisateurs</p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Utilisateurs</h1>
+          <p className="mt-1 text-sm text-muted font-light">Gestion des comptes utilisateurs</p>
         </div>
         <button onClick={openCreate}
-          className="px-5 py-2 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-all">
+          className="px-4 py-2 border border-border bg-surface text-foreground text-sm font-medium rounded-sm hover:border-strong transition-all">
           + Nouvel utilisateur
         </button>
       </div>
@@ -113,8 +120,8 @@ export default function UsersPage() {
         {['', 'client', 'staff', 'admin'].map(role => (
           <button key={role}
             onClick={() => setFilterRole(role)}
-            className={`px-4 py-1.5 text-xs font-medium rounded-full transition-all ${
-              filterRole === role ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-400 hover:text-gray-700'
+            className={`px-4 py-1.5 text-xs font-medium rounded-sm transition-all ${
+              filterRole === role ? 'bg-foreground text-white' : 'bg-surface text-muted hover:text-strong'
             }`}>
             {role || 'Tous'}
           </button>
@@ -122,54 +129,54 @@ export default function UsersPage() {
       </div>
 
       {/* Users Table */}
-      <div className="overflow-hidden rounded-2xl border border-gray-100">
+      <div className="overflow-hidden bg-surface border border-border rounded-sm">
         <table className="w-full">
           <thead>
-            <tr className="bg-gray-50">
-              <th className="text-left px-5 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider">Nom</th>
-              <th className="text-left px-5 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider">Email</th>
-              <th className="text-left px-5 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider">Rôle</th>
-              <th className="text-left px-5 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider">Statut</th>
-              <th className="text-left px-5 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider">Téléphone</th>
-              <th className="text-right px-5 py-3 text-xs font-medium text-gray-400 uppercase tracking-wider">Actions</th>
+            <tr className="bg-surface">
+              <th className="text-left px-5 py-3 text-xs font-medium text-muted uppercase tracking-wider">Nom</th>
+              <th className="text-left px-5 py-3 text-xs font-medium text-muted uppercase tracking-wider">Email</th>
+              <th className="text-left px-5 py-3 text-xs font-medium text-muted uppercase tracking-wider">Rôle</th>
+              <th className="text-left px-5 py-3 text-xs font-medium text-muted uppercase tracking-wider">Statut</th>
+              <th className="text-left px-5 py-3 text-xs font-medium text-muted uppercase tracking-wider">Téléphone</th>
+              <th className="text-right px-5 py-3 text-xs font-medium text-muted uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50">
+          <tbody className="divide-y divide-border">
             {users.map(u => (
-              <tr key={u._id} className="hover:bg-gray-50">
-                <td className="px-5 py-3 text-sm font-medium text-gray-900">{u.name}</td>
-                <td className="px-5 py-3 text-sm text-gray-500">{u.email}</td>
+              <tr key={u._id} className="hover:bg-surface">
+                <td className="px-5 py-3 text-sm font-medium text-foreground">{u.name}</td>
+                <td className="px-5 py-3 text-sm text-muted">{u.email}</td>
                 <td className="px-5 py-3">
-                  <span className={`px-2.5 py-0.5 text-xs font-medium rounded-full ${
-                    u.role === 'admin' ? 'bg-gray-900 text-white' :
+                  <span className={`px-2.5 py-0.5 text-xs font-medium rounded-sm ${
+                    u.role === 'admin' ? 'bg-foreground text-white' :
                     u.role === 'staff' ? 'bg-blue-50 text-blue-600' :
-                    'bg-gray-100 text-gray-500'
+                    'bg-surface text-muted'
                   }`}>
                     {u.role}
                   </span>
                 </td>
                 <td className="px-5 py-3">
                   <span className={`inline-flex items-center gap-1.5 text-xs font-medium ${
-                    u.isActive !== false ? 'text-gray-900' : 'text-red-500'
+                    u.isActive !== false ? 'text-foreground' : 'text-red-500'
                   }`}>
-                    <span className={`w-1.5 h-1.5 rounded-full ${u.isActive !== false ? 'bg-gray-900' : 'bg-red-500'}`}></span>
+                    <span className={`w-1.5 h-1.5 rounded-full ${u.isActive !== false ? 'bg-foreground' : 'bg-red-500'}`}></span>
                     {u.isActive !== false ? 'Actif' : 'Inactif'}
                   </span>
                 </td>
-                <td className="px-5 py-3 text-sm text-gray-400">{u.phone || '-'}</td>
+                <td className="px-5 py-3 text-sm text-muted">{u.phone || '-'}</td>
                 <td className="px-5 py-3 text-right">
                   <button onClick={() => openEdit(u)}
-                    className="text-xs text-gray-400 hover:text-gray-900 mr-3 transition-colors">
+                    className="text-xs text-muted hover:text-strong mr-3 transition-colors">
                     Modifier
                   </button>
                   <button onClick={() => toggleActive(u)}
                     className={`text-xs mr-3 transition-colors ${
-                      u.isActive !== false ? 'text-gray-400 hover:text-red-500' : 'text-gray-400 hover:text-gray-900'
+                      u.isActive !== false ? 'text-muted hover:text-red-500' : 'text-muted hover:text-foreground'
                     }`}>
                     {u.isActive !== false ? 'Désactiver' : 'Activer'}
                   </button>
                   <button onClick={() => deleteUser(u)}
-                    className="text-xs text-gray-400 hover:text-red-500 transition-colors">
+                    className="text-xs text-red-500 hover:text-red-600 transition-colors">
                     Supprimer
                   </button>
                 </td>
