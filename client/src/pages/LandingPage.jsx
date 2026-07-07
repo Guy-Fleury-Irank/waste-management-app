@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { ArrowRight, ChevronRight } from 'lucide-react';
@@ -43,8 +44,40 @@ export default function LandingPage() {
     },
   ];
 
+  const words = ["réinventée.", "écologique.", "optimisée.", "intelligente.", "durable."];
+  const [wordIndex, setWordIndex] = useState(0);
+  const [displayedText, setDisplayedText] = useState(words[0]);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentWord = words[wordIndex];
+
+    if (!isDeleting && displayedText === currentWord) {
+      const timeout = setTimeout(() => setIsDeleting(true), 2000);
+      return () => clearTimeout(timeout);
+    }
+
+    if (isDeleting && displayedText === "") {
+      setIsDeleting(false);
+      setWordIndex((prev) => (prev + 1) % words.length);
+      return;
+    }
+
+    const speed = isDeleting ? 50 : 80;
+    const timeout = setTimeout(() => {
+      if (isDeleting) {
+        setDisplayedText(currentWord.substring(0, displayedText.length - 1));
+      } else {
+        setDisplayedText(currentWord.substring(0, displayedText.length + 1));
+      }
+    }, speed);
+
+    return () => clearTimeout(timeout);
+  }, [displayedText, isDeleting, wordIndex]);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <style>{`@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}.cursor-blink{animation:blink 1s step-end infinite}`}</style>
       {/* ============ HEADER ============ */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-surface/95 backdrop-blur-sm border-b border-border">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -79,7 +112,10 @@ export default function LandingPage() {
           <span className="text-xs font-semibold uppercase tracking-[0.3em] text-muted">Brutalisme Technique</span>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-gray-900 leading-[1.05] max-w-4xl mx-auto">
             La gestion des déchets<br />
-            <span className="text-muted">réinventée.</span>
+            <span className="inline-block min-w-[180px] text-left text-muted">
+              {displayedText}
+              <span className="cursor-blink ml-0.5 font-light">|</span>
+            </span>
           </h1>
           <p className="mt-6 text-lg md:text-xl text-gray-400 font-light max-w-2xl mx-auto leading-relaxed">
             Une plateforme tout-en-un pour piloter vos collectes, suivre vos sites,

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import api from '../services/api';
 import toast from 'react-hot-toast';
+import ProfilePictureUpload from '../components/ProfilePictureUpload';
 
 export default function ProfilePage() {
   const { user, updateUser } = useAuth();
@@ -10,15 +11,28 @@ export default function ProfilePage() {
     phone: user?.phone || '',
     address: user?.address || ''
   });
+  const [profilePicture, setProfilePicture] = useState(user?.profilePicture || null);
   const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handlePictureChange = (base64) => {
+    try {
+      setProfilePicture(base64);
+    } catch (error) {
+      console.error('❌ Erreur handlePictureChange :', error);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const { data } = await api.put('/auth/me', form);
+      const payload = { ...form };
+      if (profilePicture !== undefined) {
+        payload.profilePicture = profilePicture;
+      }
+      const { data } = await api.put('/auth/me', payload);
       updateUser(data);
       toast.success('Profil mis à jour');
     } catch { /* handled */ }
@@ -47,6 +61,16 @@ export default function ProfilePage() {
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Photo de profil */}
+      <div className="bg-surface border border-border rounded-sm p-6 mb-8">
+        <h2 className="text-base font-medium text-foreground mb-5">Photo de profil</h2>
+        <ProfilePictureUpload
+          currentPicture={profilePicture}
+          onPictureChange={handlePictureChange}
+          userName={user?.name || 'User'}
+        />
       </div>
 
       {/* Formulaire */}

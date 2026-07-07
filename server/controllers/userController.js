@@ -71,7 +71,7 @@ exports.updateUser = async (req, res) => {
   try {
     const User = getModel('User');
     const update = {};
-    const fieldsToUpdate = ['name', 'email', 'phone', 'address', 'role', 'isActive'];
+    const fieldsToUpdate = ['name', 'email', 'phone', 'address', 'role', 'isActive', 'profilePicture'];
     fieldsToUpdate.forEach(field => {
       if (req.body[field] !== undefined) update[field] = req.body[field];
     });

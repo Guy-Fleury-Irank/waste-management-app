@@ -209,6 +209,152 @@ npm run dev
 
 ---
 
+## 🚀 Exportation des tables + Photo de profil — 07/07/2026
+
+**Date:** 07/07/2026  
+**Author:** Senior Full-Stack Expert (React 19 + Tailwind CSS v4 + Express 5)  
+**Scope:** Deux nouvelles fonctionnalités majeures : exportation JSON/CSV des tableaux + photo de profil utilisateur
+
+---
+
+### Fonctionnalité 1 : Exportation des tables (JSON / CSV)
+
+#### Nouveaux fichiers créés
+
+| Fichier | Type | Description |
+|---------|------|-------------|
+| `client/src/utils/exportUtils.js` | ✨ Créé | Utilitaires `exportToJSON()` et `exportToCSV()` avec Blob/URL.createObjectURL |
+| `client/src/components/ExportButtons.jsx` | ✨ Créé | Composant réutilisable avec deux boutons (Exporter JSON / Exporter CSV) |
+
+#### Fichiers modifiés (ajout du composant ExportButtons)
+
+| Fichier | Données exportées | Nom de fichier |
+|---------|-------------------|----------------|
+| `client/src/pages/CollectesPage.jsx` | `filteredCollectes` | `collectes` |
+| `client/src/pages/SitesPage.jsx` | `sites` | `sites` |
+| `client/src/pages/VehiculesPage.jsx` | `vehicles` | `vehicules` |
+| `client/src/pages/UsersPage.jsx` | `users` | `utilisateurs` |
+| `client/src/pages/AbonnementsPage.jsx` | `subscriptions` | `abonnements` |
+| `client/src/pages/ClientDashboardPage.jsx` | `subscriptions` + `collectes` | `abonnements_client` / `collectes_client` |
+| `client/src/pages/StaffDashboardPage.jsx` | `subscriptions` / `clients` / `collectes` | Variable selon onglet |
+
+#### Détails techniques
+- **Export JSON** : `JSON.stringify(data, null, 2)` → `Blob` → téléchargement automatique
+- **Export CSV** : Conversion native JS avec séparateur `;` (compatible Excel français) + BOM UTF-8
+- **Design** : Boutons stylisés comme les filtres existants (`px-3 py-1.5 text-xs font-medium rounded-sm bg-surface border border-border`)
+- **Sécurité** : Toutes les fonctions sont wrapées dans des `try/catch` avec `console.error`
+
+---
+
+### Fonctionnalité 2 : Photo de profil utilisateur (Base64)
+
+#### Backend
+
+| Fichier | Type | Modification |
+|---------|------|-------------|
+| `server/models/User.js` | ✏️ Modifié | Ajout champ `profilePicture: { type: String }` (optionnel) |
+| `server/controllers/authController.js` | ✏️ Modifié | Ajout `'profilePicture'` dans `fieldsToUpdate` du `updateProfile` |
+| `server/controllers/userController.js` | ✏️ Modifié | Ajout `'profilePicture'` dans `fieldsToUpdate` du `updateUser` |
+
+#### Contraintes respectées
+- ✅ **Aucun fichier physique** sur le serveur (pas de `multer`, pas de dossier uploads)
+- ✅ **Stockage Base64 direct** dans MongoDB/NeDB
+- ✅ **Aucune modification** des routes d'authentification ou de la config Express globale
+
+#### Frontend
+
+| Fichier | Type | Description |
+|---------|------|-------------|
+| `client/src/components/ProfilePictureUpload.jsx` | ✨ Créé | Composant upload/capture avec conversion Base64 via FileReader |
+| `client/src/pages/ProfilePage.jsx` | ✏️ Modifié | Intégration du composant photo + envoi au backend |
+| `client/src/pages/UsersPage.jsx` | ✏️ Modifié | Colonne photo dans le tableau + champ photo dans le modal |
+| `client/src/components/Layout.jsx` | ✏️ Modifié | Avatar utilisateur dans le header |
+
+#### Détails techniques
+- **Conversion Base64** : `FileReader.readAsDataURL()` immédiate côté frontend
+- **Validation** : Type image obligatoire + taille max 5 Mo
+- **Capture webcam** : Support via `capture="environment"` sur mobile
+- **Avatar fallback** : `https://ui-avatars.com/api/?name={nom}&background=111&color=fff`
+- **Suppression** : Bouton "Supprimer" qui remet la photo à `null`
+- **Affichage** : `<img src={user.profilePicture || avatar-fallback} />`
+
+---
+
+### Résumé des Modifications
+
+| Fichier | Type | Modification |
+|---------|------|-------------|
+| `client/src/utils/exportUtils.js` | ✨ Créé | Utilitaires d'export JSON/CSV |
+| `client/src/components/ExportButtons.jsx` | ✨ Créé | Composant boutons d'export réutilisable |
+| `client/src/components/ProfilePictureUpload.jsx` | ✨ Créé | Composant photo de profil avec conversion Base64 |
+| `client/src/pages/CollectesPage.jsx` | ✏️ Modifié | Ajout ExportButtons |
+| `client/src/pages/SitesPage.jsx` | ✏️ Modifié | Ajout ExportButtons |
+| `client/src/pages/VehiculesPage.jsx` | ✏️ Modifié | Ajout ExportButtons |
+| `client/src/pages/UsersPage.jsx` | ✏️ Modifié | ExportButtons + colonne photo + champ photo modal |
+| `client/src/pages/AbonnementsPage.jsx` | ✏️ Modifié | Ajout ExportButtons |
+| `client/src/pages/ClientDashboardPage.jsx` | ✏️ Modifié | Ajout ExportButtons (2 tableaux) |
+| `client/src/pages/StaffDashboardPage.jsx` | ✏️ Modifié | Ajout ExportButtons (3 onglets) |
+| `client/src/pages/ProfilePage.jsx` | ✏️ Modifié | Intégration ProfilePictureUpload |
+| `client/src/components/Layout.jsx` | ✏️ Modifié | Avatar dans le header |
+| `server/models/User.js` | ✏️ Modifié | Ajout champ `profilePicture` |
+| `server/controllers/authController.js` | ✏️ Modifié | Ajout `profilePicture` dans updateProfile |
+| `server/controllers/userController.js` | ✏️ Modifié | Ajout `profilePicture` dans updateUser |
+
+---
+
+## 🎨 Animation Typewriter — Titre Landing Page — 07/07/2026
+
+**Date:** 07/07/2026  
+**Author:** Senior Full-Stack Expert (React 19 + Tailwind CSS v4)  
+**Scope:** Effet machine à écrire dynamique sur le dernier mot du grand titre de la Landing Page
+
+### Détails de l'implémentation
+
+- **Fichier modifié** : `client/src/pages/LandingPage.jsx`
+- **Mots défilants** : `"réinventée."` → `"écologique."` → `"optimisée."` → `"intelligente."` → `"durable."` (boucle infinie)
+- **Mécanisme** : `useState` + `useEffect` avec `setTimeout` — efface caractère par caractère (50ms), pause 300ms, réécrit (80ms), pause 2000ms
+- **Sécurité layout** : `inline-block min-w-[180px]` pour éviter tout saut visuel quand la longueur du mot change
+- **Curseur clignotant** : `@keyframes blink` injecté via `<style>` inline, appliqué sur un `span` avec `|`
+- **Couleur conservée** : `text-muted` (gris élégant d'origine)
+- **Aucune dépendance externe** ajoutée — uniquement React hooks natifs + CSS
+
+### Résumé des Modifications
+
+| Fichier | Type | Modification |
+|---------|------|-------------|
+| `client/src/pages/LandingPage.jsx` | ✏️ Modifié | Ajout useState/useEffect pour l'effet typewriter + curseur clignotant + keyframes CSS |
+
+---
+
+## 🔥 Hotfix — 07/07/2026
+
+**Date:** 07/07/2026  
+**Author:** Senior Full-Stack Expert  
+**Scope:** Correction "PayloadTooLargeError" + Ajout capture webcam native
+
+### Bug #6 ⚡ : PayloadTooLargeError — Photo de profil rejetée
+
+- **Symptôme** : Erreur `PayloadTooLargeError: request entity too large` lors de l'envoi d'une photo de profil en Base64
+- **Cause Racine** : La limite par défaut d'Express pour `express.json()` est de 100 Ko, insuffisante pour une chaîne Base64
+- **Fichier Modifié** : `server/index.js`
+- **Fix Appliqué** :
+  - Remplacer `app.use(express.json())` par `app.use(express.json({ limit: '50mb' }))`
+  - Ajouter `app.use(express.urlencoded({ limit: '50mb', extended: true }))` pour la compatibilité
+  - Les deux lignes sont positionnées AVANT les routes, juste après `cookieParser()`
+
+### Fonctionnalité 3 : Capture photo via webcam native
+
+- **Fichier Modifié** : `client/src/components/ProfilePictureUpload.jsx`
+- **Ajouts** :
+  - Nouveau bouton "📷 Prendre une photo" à côté des boutons existants
+  - Modal caméra avec `<video>` affichant le flux en direct via `navigator.mediaDevices.getUserMedia({ video: true })`
+  - Bouton "Capturer l'image" qui dessine le frame sur un `<canvas>` masqué
+  - Conversion en Base64 via `canvas.toDataURL('image/jpeg', 0.6)` (JPEG compressé qualité 0.6)
+  - Arrêt propre du flux caméra avec `track.stop()` sur chaque piste
+  - Gestion des erreurs avec try/catch et console.error
+
+---
+
 **Date:** 2026-06-15  
 **Scope:** Fix critical auth bugs, improve session state management
 
@@ -886,4 +1032,3 @@ Each phase is independent; you can rollback one phase without affecting others.
 - Tests should run with `npm run test` after Jest setup
 - Manual testing requires both servers running and browser dev tools access
 - Future enhancements: Refresh token rotation, device session tracking, session timeout
-

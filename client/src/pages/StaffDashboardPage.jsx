@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../services/api';
+import ExportButtons from '../components/ExportButtons';
 
 export default function StaffDashboardPage() {
   const [users, setUsers] = useState([]);
@@ -93,7 +94,10 @@ export default function StaffDashboardPage() {
       {activeTab === 'overview' && (
         <div className="space-y-6">
           <div>
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Abonnements récents</h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-gray-900">Abonnements récents</h2>
+              <ExportButtons data={subscriptions} filename="abonnements_staff" />
+            </div>
             <div className="overflow-hidden border border-border rounded-sm">
               <table className="w-full">
                 <thead>
@@ -138,7 +142,10 @@ export default function StaffDashboardPage() {
       {/* Clients & Payments Tab */}
       {activeTab === 'clients' && (
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Clients & Modes de paiement</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-gray-900">Clients & Modes de paiement</h2>
+            <ExportButtons data={clients} filename="clients_staff" />
+          </div>
           <div className="overflow-hidden rounded-2xl border border-gray-100">
             <table className="w-full">
               <thead>
@@ -189,7 +196,10 @@ export default function StaffDashboardPage() {
       {/* Collectes Tab */}
       {activeTab === 'collectes' && (
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Collectes</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-gray-900">Collectes</h2>
+            <ExportButtons data={collectes} filename="collectes_staff" />
+          </div>
           <div className="overflow-hidden rounded-2xl border border-gray-100">
             <table className="w-full">
               <thead>

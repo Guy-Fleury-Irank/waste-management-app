@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import api from '../services/api';
 import toast from 'react-hot-toast';
+import ExportButtons from '../components/ExportButtons';
+import ProfilePictureUpload from '../components/ProfilePictureUpload';
 
 const ROLE_OPTIONS = ['client', 'staff', 'admin'];
 
@@ -11,7 +13,7 @@ export default function UsersPage() {
   const [editUser, setEditUser] = useState(null);
   const [filterRole, setFilterRole] = useState('');
   const [form, setForm] = useState({
-    name: '', email: '', password: '', phone: '', address: '', role: 'client'
+    name: '', email: '', password: '', phone: '', address: '', role: 'client', profilePicture: null
   });
 
   const fetchUsers = useCallback(async () => {
@@ -38,7 +40,7 @@ export default function UsersPage() {
 
   const openCreate = () => {
     setEditUser(null);
-    setForm({ name: '', email: '', password: '', phone: '', address: '', role: 'client' });
+    setForm({ name: '', email: '', password: '', phone: '', address: '', role: 'client', profilePicture: null });
     setShowModal(true);
   };
 
@@ -51,11 +53,20 @@ export default function UsersPage() {
       phone: user.phone || '',
       address: user.address || '',
       role: user.role || 'client',
+      profilePicture: user.profilePicture || null,
     });
     setShowModal(true);
   };
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handlePictureChange = (base64) => {
+    try {
+      setForm(prev => ({ ...prev, profilePicture: base64 }));
+    } catch (error) {
+      console.error('❌ Erreur handlePictureChange :', error);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -115,8 +126,9 @@ export default function UsersPage() {
         </button>
       </div>
 
-      {/* Filters */}
-      <div className="flex gap-2">
+      {/* Filters + Export */}
+      <div className="flex items-center justify-between">
+        <div className="flex gap-2">
         {['', 'client', 'staff', 'admin'].map(role => (
           <button key={role}
             onClick={() => setFilterRole(role)}
@@ -126,6 +138,8 @@ export default function UsersPage() {
             {role || 'Tous'}
           </button>
         ))}
+        </div>
+        <ExportButtons data={users} filename="utilisateurs" />
       </div>
 
       {/* Users Table */}
@@ -133,6 +147,7 @@ export default function UsersPage() {
         <table className="w-full">
           <thead>
             <tr className="bg-surface">
+              <th className="text-left px-5 py-3 text-xs font-medium text-muted uppercase tracking-wider">Photo</th>
               <th className="text-left px-5 py-3 text-xs font-medium text-muted uppercase tracking-wider">Nom</th>
               <th className="text-left px-5 py-3 text-xs font-medium text-muted uppercase tracking-wider">Email</th>
               <th className="text-left px-5 py-3 text-xs font-medium text-muted uppercase tracking-wider">Rôle</th>
@@ -144,6 +159,13 @@ export default function UsersPage() {
           <tbody className="divide-y divide-border">
             {users.map(u => (
               <tr key={u._id} className="hover:bg-surface">
+                <td className="px-5 py-3">
+                  <img
+                    src={u.profilePicture || `https://ui-avatars.com/api/?name=${encodeURIComponent(u.name)}&background=111&color=fff&size=32`}
+                    alt={u.name}
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
+                </td>
                 <td className="px-5 py-3 text-sm font-medium text-foreground">{u.name}</td>
                 <td className="px-5 py-3 text-sm text-muted">{u.email}</td>
                 <td className="px-5 py-3">
@@ -220,6 +242,13 @@ export default function UsersPage() {
                 <label className="label-xai">Adresse</label>
                 <input name="address" value={form.address} onChange={handleChange}
                   className="input-xai" placeholder="Adresse" />
+              </div>
+              <div className="flex justify-center py-2">
+                <ProfilePictureUpload
+                  currentPicture={form.profilePicture}
+                  onPictureChange={handlePictureChange}
+                  userName={form.name || 'User'}
+                />
               </div>
               <div>
                 <label className="label-xai">Rôle</label>

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import api from '../services/api';
 import { useAuth } from '../hooks/useAuth';
 import toast from 'react-hot-toast';
+import ExportButtons from '../components/ExportButtons';
 
 const emptyForm = {
   plate: '', brand: '', model: '', year: '', type: 'camion',
@@ -82,6 +83,10 @@ export default function VehiculesPage() {
             + Nouveau véhicule
           </button>
         )}
+      </div>
+
+      <div className="flex justify-end mb-2">
+        <ExportButtons data={vehicles} filename="vehicules" />
       </div>
 
       {showForm && (

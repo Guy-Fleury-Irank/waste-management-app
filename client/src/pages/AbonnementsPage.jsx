@@ -3,6 +3,7 @@ import api from '../services/api';
 import { useAuth } from '../hooks/useAuth';
 import toast from 'react-hot-toast';
 import { CreditCard, Wallet, Smartphone, Building2 } from 'lucide-react';
+import ExportButtons from '../components/ExportButtons';
 
 const iconClass = "w-4 h-4 stroke-[1.5] inline-block align-middle";
 
@@ -149,11 +150,14 @@ export default function AbonnementsPage() {
         </div>
       )}
 
-      {/* Subscriptions List */}
+        {/* Subscriptions List */}
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">
-          {user?.role === 'client' ? 'Mes abonnements' : 'Tous les abonnements'}
-        </h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold text-gray-900">
+            {user?.role === 'client' ? 'Mes abonnements' : 'Tous les abonnements'}
+          </h2>
+          <ExportButtons data={subscriptions} filename="abonnements" />
+        </div>
         {subscriptions.length === 0 ? (
           <div className="bg-surface border border-border rounded-sm p-6 text-center">
             <p className="text-sm text-muted">Aucun abonnement pour le moment.</p>

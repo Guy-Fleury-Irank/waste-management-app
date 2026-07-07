@@ -27,8 +27,15 @@ export default function Layout({ children }) {
           <h1 className="text-base font-medium text-gray-900 capitalize">
             {pageTitle}
           </h1>
-          <div className="flex items-center gap-6">
-            <span className="text-sm font-mono text-muted">{user?.name}</span>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              <img
+                src={user?.profilePicture || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'User')}&background=111&color=fff&size=32`}
+                alt={user?.name}
+                className="w-7 h-7 rounded-full object-cover"
+              />
+              <span className="text-sm font-mono text-muted">{user?.name}</span>
+            </div>
             <button
               onClick={async () => { await logout(); navigate('/login'); }}
               className="text-sm font-medium text-muted hover:text-strong transition-colors"

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import api from '../services/api';
 import { useAuth } from '../hooks/useAuth';
 import toast from 'react-hot-toast';
+import ExportButtons from '../components/ExportButtons';
 
 const emptyForm = {
   date: new Date().toISOString().slice(0, 16),
@@ -132,8 +133,9 @@ export default function CollectesPage() {
         )}
       </div>
 
-      {/* Filtres */}
-      <div className="flex gap-2 mb-6">
+      {/* Filtres + Export */}
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex gap-2">
         {['', 'planifie', 'en_cours', 'termine', 'annule'].map((s) => (
           <button key={s} onClick={() => setFilter(s)}
             className={`px-4 py-1.5 text-xs rounded-sm transition-colors ${
@@ -142,6 +144,8 @@ export default function CollectesPage() {
             {s === '' ? 'Tous' : s === 'en_cours' ? 'En cours' : s.charAt(0).toUpperCase() + s.slice(1)}
           </button>
         ))}
+        </div>
+        <ExportButtons data={filteredCollectes} filename="collectes" />
       </div>
 
       {/* Modal Form */}

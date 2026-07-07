@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import api from '../services/api';
 import { useAuth } from '../hooks/useAuth';
 import toast from 'react-hot-toast';
+import ExportButtons from '../components/ExportButtons';
 
 const emptyForm = { name: '', address: '', city: '', contactName: '', contactPhone: '', type: 'residentiel' };
 
@@ -61,6 +62,10 @@ export default function SitesPage() {
             + Nouveau site
           </button>
         )}
+      </div>
+
+      <div className="flex justify-end mb-2">
+        <ExportButtons data={sites} filename="sites" />
       </div>
 
       {showForm && (

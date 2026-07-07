@@ -163,7 +163,7 @@ exports.createStaffOrAdmin = async (req, res) => {
 exports.updateProfile = async (req, res) => {
   try {
     const User = getModel('User');
-    const fieldsToUpdate = ['name', 'phone', 'address'];
+    const fieldsToUpdate = ['name', 'phone', 'address', 'profilePicture'];
     const update = {};
     fieldsToUpdate.forEach(field => {
       if (req.body[field] !== undefined) update[field] = req.body[field];

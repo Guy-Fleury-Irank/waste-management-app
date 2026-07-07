@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { useAuth } from '../hooks/useAuth';
+import ExportButtons from '../components/ExportButtons';
 
 export default function ClientDashboardPage() {
   const { user } = useAuth();
@@ -115,7 +116,10 @@ export default function ClientDashboardPage() {
 
       {/* Subscription History */}
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Historique des abonnements</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold text-gray-900">Historique des abonnements</h2>
+          <ExportButtons data={subscriptions} filename="abonnements_client" />
+        </div>
         {subscriptions.length === 0 ? (
           <div className="bg-gray-50 rounded-2xl p-6 text-center">
             <p className="text-sm text-gray-400">Aucun abonnement.</p>
@@ -169,7 +173,10 @@ export default function ClientDashboardPage() {
 
       {/* Collection History */}
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Historique des collectes</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold text-gray-900">Historique des collectes</h2>
+          <ExportButtons data={collectes} filename="collectes_client" />
+        </div>
         {collectes.length === 0 ? (
           <div className="bg-gray-50 rounded-2xl p-6 text-center">
             <p className="text-sm text-gray-400">Aucune collecte pour le moment.</p>
